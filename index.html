@@ -3,16 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Blog with LaTeX & Read More</title>
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            }
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>Tensor Calculus Definitions and Corollaries</title>
+    <!-- KaTeX CSS for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <style>
         * {
             box-sizing: border-box;
@@ -21,306 +14,521 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Georgia', serif;
             line-height: 1.6;
             color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
             background-color: #f9f9f9;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4a6fa5;
         }
         
         h1 {
             color: #2c3e50;
+            font-size: 2.5rem;
             margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+        
+        .content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        h2, h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eaeaea;
         }
         
         h2 {
-            color: #3498db;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #eee;
+            font-size: 1.8rem;
         }
         
         h3 {
-            color: #2c3e50;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
         }
         
-        p {
+        .subsection {
+            margin-bottom: 30px;
+        }
+        
+        .definition, .corollary, .derivative {
             margin-bottom: 15px;
-        }
-        
-        .math-section {
-            background: #f8f9fa;
-            border-left: 4px solid #4CAF50;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
+            padding-left: 10px;
+            border-left: 3px solid #4a6fa5;
         }
         
         .definition {
-            background: #e8f4fd;
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            margin: 15px 0;
+            border-left-color: #3498db;
         }
         
-        .expandable-section {
-            background: #fff9e6;
-            border: 1px solid #ffd54f;
-            border-radius: 5px;
-            padding: 20px;
-            margin: 25px 0;
+        .corollary {
+            border-left-color: #2ecc71;
         }
         
-        .hidden-content {
-            display: none;
-            padding-top: 15px;
-            border-top: 1px dashed #ccc;
-            margin-top: 15px;
+        .derivative {
+            border-left-color: #e74c3c;
         }
         
-        .read-more-btn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-            transition: background 0.3s;
-        }
-        
-        .read-more-btn:hover {
-            background: #45a049;
-        }
-        
-        .read-more-btn.show-less {
-            background: #2196F3;
-        }
-        
-        ul, ol {
-            margin-left: 25px;
+        ul {
+            margin-left: 20px;
             margin-bottom: 15px;
         }
         
         li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         
-        code {
-            background: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .latex-example {
-            background: #272822;
-            color: #f8f8f2;
-            padding: 15px;
+        .proof {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
             border-radius: 5px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            border-left: 3px solid #f1c40f;
+        }
+        
+        .proof-title {
+            font-weight: bold;
+            color: #d35400;
+            margin-bottom: 5px;
+        }
+        
+        .boxed {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 5px 0;
+        }
+        
+        .equation-number {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+        
+        .katex-display {
             margin: 15px 0;
             overflow-x: auto;
+            overflow-y: hidden;
+        }
+        
+        .katex {
+            font-size: 1.1em;
+        }
+        
+        .qed {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 5px;
         }
         
         footer {
             text-align: center;
             margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #666;
-            font-size: 14px;
+            border-top: 1px solid #eaeaea;
+            color: #7f8c8d;
+            font-size: 0.9rem;
         }
         
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-            }
-            
+        @media (max-width: 768px) {
             body {
                 padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Mathematics Blog with LaTeX</h1>
-            <p>A demonstration of inline equations and expandable content</p>
-        </header>
-        
-        <section>
-            <h2>Introduction to Tensor Analysis</h2>
-            
-            <p>In differential geometry and tensor analysis, we deal with various coordinate systems and basis vectors. Let's explore some fundamental definitions.</p>
+    <header>
+        <h1>Tensor Calculus: Covariant and Contravariant Components</h1>
+        <div class="subtitle">Definitions, Corollaries, and Derivative Relationships</div>
+    </header>
+    
+    <div class="content">
+        <div class="subsection">
+            <h2>Definitions</h2>
             
             <div class="definition">
-                <h3>Basis Vectors and Components</h3>
-                <p><strong>Covariant basis</strong> of a vector space of dimension $n$:</p>
-                <p>$$\mathbf{e}_j \triangleq \{\text{any linearly independent basis}\}$$</p>
-                <p>where in general $\mathbf{e}_i \cdot \mathbf{e}_j \neq \delta_{ij}$ (not necessarily orthonormal).</p>
+                <p><strong>Covariant basis</strong> of a vector space of dimension <em>n</em>: 
+                <span class="katex">\mathbf{e_j} \triangleq</span> {any linearly independent basis for which in general is 
+                <span class="katex">\mathbf{e_i} \cdot \mathbf{e_j} \neq \delta_{ij}</span>}, i.e. not necessarily orthonormal (D.1).</p>
             </div>
             
-            <div class="expandable-section">
-                <h3>Detailed Explanation of Contravariant Components</h3>
-                <p>For any vector $\mathbf{v}$ in our space, we can express it in terms of basis vectors.</p>
-                
-                <div class="hidden-content" id="content1">
-                    <p><strong>Contravariant components</strong> of a vector $\mathbf{v}$ are defined as:</p>
-                    <p>$$v^i \triangleq \{ v^i \mid \mathbf{v} = v^i \mathbf{e}_i \}$$</p>
-                    <p>This uses the Einstein summation convention where repeated indices are summed over.</p>
-                    
-                    <p>For example, in 3D space:</p>
-                    <p>$$\mathbf{v} = v^1 \mathbf{e}_1 + v^2 \mathbf{e}_2 + v^3 \mathbf{e}_3$$</p>
-                    
-                    <p>The transformation properties of these components under coordinate changes define their "contravariant" nature.</p>
-                </div>
-                
-                <button class="read-more-btn" onclick="toggleContent('content1', this)">
-                    Read More
-                </button>
+            <div class="definition">
+                <p><strong>Contravariant components</strong> of a vector <span class="katex">\mathbf{v}</span>: 
+                <span class="katex">v^i \triangleq \{ v^i \mid \mathbf{v} = v^i \mathbf{e_i}\}</span> (D.2).</p>
             </div>
             
-            <div class="math-section">
-                <h3>Dual Basis System</h3>
-                <p><strong>Dual (contravariant) basis</strong> of a vector space of dimension $n$:</p>
-                <p>$$\mathbf{e}^i \triangleq \{ \mathbf{e}^i : \mathbf{e}^i \cdot \mathbf{e}_j = \delta^i_j \}$$</p>
-                
-                <p>Where $\delta^i_j$ is the Kronecker delta:</p>
-                <p>$$\delta^i_j = \begin{cases} 1 & \text{if } i = j \\ 0 & \text{if } i \neq j \end{cases}$$</p>
+            <div class="definition">
+                <p><strong>Dual (contravariant) basis</strong> of a vector space of dimension <em>n</em>: 
+                <span class="katex">\mathbf{e^i} \triangleq \{ \mathbf{e^i} : \mathbf{e^i} \cdot \mathbf{e_j} = \delta^i_j \}</span> (D.3).</p>
             </div>
             
-            <div class="expandable-section">
-                <h3>Advanced Tensor Operations</h3>
-                <p>Tensor contraction and index manipulation are essential operations.</p>
-                
-                <div class="hidden-content" id="content2">
-                    <h4>Metric Tensor</h4>
-                    <p>The metric tensor $g_{ij}$ defines the inner product:</p>
-                    <p>$$g_{ij} = \mathbf{e}_i \cdot \mathbf{e}_j$$</p>
-                    
-                    <h4>Raising and Lowering Indices</h4>
-                    <p>We can convert between covariant and contravariant components:</p>
-                    <p>$$v_i = g_{ij} v^j$$</p>
-                    <p>$$v^i = g^{ij} v_j$$</p>
-                    
-                    <p>where $g^{ij}$ is the inverse metric tensor satisfying:</p>
-                    <p>$$g^{ik} g_{kj} = \delta^i_j$$</p>
-                    
-                    <h4>Christoffel Symbols</h4>
-                    <p>For covariant differentiation, we need Christoffel symbols:</p>
-                    <p>$$\Gamma^k_{ij} = \frac{1}{2} g^{km} \left( \frac{\partial g_{jm}}{\partial x^i} + \frac{\partial g_{im}}{\partial x^j} - \frac{\partial g_{ij}}{\partial x^m} \right)$$</p>
-                </div>
-                
-                <button class="read-more-btn" onclick="toggleContent('content2', this)">
-                    Show Advanced Mathematics
-                </button>
+            <div class="definition">
+                <p><strong>Covariant components</strong> of a vector <span class="katex">\mathbf{v}</span>: 
+                <span class="katex">v_i \triangleq \{ v_i \mid \mathbf{v} = v_i \mathbf{e^i}\}</span> (D.4).</p>
             </div>
             
-            <div class="math-section">
-                <h3>Example Calculations</h3>
-                <p>Let's consider a simple 2D example with polar coordinates.</p>
-                
-                <div class="expandable-section">
-                    <p>The basis vectors in polar coordinates are:</p>
-                    <p>$$\mathbf{e}_r = \frac{\partial \mathbf{r}}{\partial r}, \quad \mathbf{e}_\theta = \frac{\partial \mathbf{r}}{\partial \theta}$$</p>
-                    
-                    <div class="hidden-content" id="content3">
-                        <p>Where $\mathbf{r} = (r\cos\theta, r\sin\theta)$ in Cartesian coordinates.</p>
-                        
-                        <p>Calculating these:</p>
-                        <p>$$\mathbf{e}_r = (\cos\theta, \sin\theta)$$</p>
-                        <p>$$\mathbf{e}_\theta = (-r\sin\theta, r\cos\theta)$$</p>
-                        
-                        <p>The metric tensor components:</p>
-                        <p>$$g_{rr} = \mathbf{e}_r \cdot \mathbf{e}_r = 1$$</p>
-                        <p>$$g_{r\theta} = \mathbf{e}_r \cdot \mathbf{e}_\theta = 0$$</p>
-                        <p>$$g_{\theta\theta} = \mathbf{e}_\theta \cdot \mathbf{e}_\theta = r^2$$</p>
-                        
-                        <p>So the metric is:</p>
-                        <p>$$g_{ij} = \begin{pmatrix} 1 & 0 \\ 0 & r^2 \end{pmatrix}$$</p>
-                        
-                        <p>And its inverse:</p>
-                        <p>$$g^{ij} = \begin{pmatrix} 1 & 0 \\ 0 & 1/r^2 \end{pmatrix}$$</p>
-                    </div>
-                    
-                    <button class="read-more-btn" onclick="toggleContent('content3', this)">
-                        Show Detailed Calculation
-                    </button>
-                </div>
+            <div class="definition">
+                <p><strong>Components of the covariant metric tensor</strong> 
+                <span class="katex">g_{ij} \triangleq \mathbf{e_i} \cdot \mathbf{e_j}</span>; 
+                the metric tensor can be considered a square matrix, since it only has two covariant indices: 
+                <span class="katex">g \triangleq \{ g_{ij} \}</span>; for the commutative property of the dot product, 
+                the <span class="katex">g_{ij}</span> are symmetric (D.5).</p>
             </div>
-        </section>
+            
+            <div class="definition">
+                <p><strong>Components of the contravariant metric tensor</strong> 
+                <span class="katex">g^{ij} \triangleq \{ h_{ij} : g^{-1} = \{ h_{ij} \}\}</span>; 
+                these are the elements of the inverse of the covariant metric tensor/matrix <span class="katex">g^{-1}</span>, 
+                and for the properties of the inverse of a symmetric matrix, they're also symmetric (D.6).</p>
+            </div>
+        </div>
         
-        <div class="latex-example">
-            <h3>LaTeX Code Examples</h3>
-            <pre><code>Inline: $E = mc^2$ or \( \nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0} \)
-
-Display: $$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$
-
-Matrices: $$\begin{pmatrix} a & b \\ c & d \end{pmatrix}$$
-
-Sums: $$\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}$$</code></pre>
+        <div class="subsection">
+            <h2>Corollaries</h2>
+            <ul>
+                <li>
+                    <div class="boxed"><span class="katex">g^{ij}g_{jk} = \delta^i_k</span></div> 
+                    <span class="equation-number">(1)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        from the properties of the inverse matrix (D.6).
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\mathbf{e^i} = g^{ij} \mathbf{e_j}</span></div> 
+                    <span class="equation-number">(2)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        let's suppose that <span class="katex">\{A^{ij} \mid \mathbf{e^i} = A^{ij} \mathbf{e_j}\}</span>; 
+                        we will show that <span class="katex">A^{ij} = g^{ij}</span>. 
+                        Taking the dot product of both sides with <span class="katex">\mathbf{e_k}</span>:
+                        <span class="katex">\mathbf{e^i} \cdot \mathbf{e_k} = (A^{ij} \mathbf{e_j}) \cdot \mathbf{e_k} \stackrel{\text{(D.3,D.5)}}{\to} A^{ij}g_{jk} = \delta^i_k</span>; 
+                        multiplying both sides by <span class="katex">g^{mk}</span>:
+                        <span class="katex">g^{mk}A^{ij}g_{jk} = g^{mk}\delta^i_k \stackrel{\text{(D.5)}}{\to} g^{mk}g_{kj}A^{ij} = g^{mi} \stackrel{\text{(1)}}{\to} \delta^m_j A^{ij} = g^{mi} \to A^{im} = g^{mi}\stackrel{\text{(D.6)}}{=} g^{im},\ \text{Q.E.D.}</span>
+                        <div class="qed">∎</div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\mathbf{e^i} \cdot \mathbf{e^j} = g^{ij}</span></div> 
+                    <span class="equation-number">(3)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">\mathbf{e^i} \stackrel{\text{(2)}}{=} g^{ik} \mathbf{e_k}; \mathbf{e^j} \stackrel{\text{(2)}}{=} g^{jm} \mathbf{e_m} \to \mathbf{e^i} \cdot \mathbf{e^j} = g^{ik} g^{jm} (\mathbf{e_k} \cdot \mathbf{e_m}) \stackrel{\text{(D.5)}}{=} g^{ik}g^{jm}g_{km} \stackrel{\text{(1)}}{=} \delta^i_m g^{jm} = g^{ji} \stackrel{\text{(D.6)}}{=} g^{ij},\ \text{Q.E.D.}</span>
+                        <div class="qed">∎</div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\mathbf{e_i} = g_{ij} \mathbf{e^j}</span></div> 
+                    <span class="equation-number">(4)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        let's suppose that <span class="katex">\{B_{ij} \mid \mathbf{e_i} = B_{ij} \mathbf{e^j}\}</span>; 
+                        we will show that <span class="katex">B_{ij} = g_{ij}</span>. 
+                        Taking the dot product of both sides with <span class="katex">\mathbf{e^k}</span>: 
+                        <span class="katex">\mathbf{e_i} \cdot \mathbf{e^k} = (B_{ij} \mathbf{e^j}) \cdot \mathbf{e^k} \stackrel{\text{(D.3,3)}}{\to} B_{ij}g^{jk} = \delta_i^k</span>; 
+                        multiplying both sides by <span class="katex">g_{mk}</span>:
+                        <span class="katex">g_{mk}B_{ij}g^{jk} = g_{mk}\delta_i^k \stackrel{\text{(D.5)}}{\to} g_{mk}g^{kj}B_{ij} = g_{mi} \stackrel{\text{(1)}}{\to} \delta_m^j B_{ij} = g_{mi} \to B_{im} = g_{mi} \stackrel{\text{(D.5)}}{=} g_{im},\ \text{Q.E.D.}</span>
+                        <div class="qed">∎</div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">v^i = g^{ij} v_j</span></div> 
+                    <span class="equation-number">(5)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">\mathbf{v} \stackrel{\text{(D.2)}}{=} v^i \mathbf{e_i}; \mathbf{v} \stackrel{\text{(D.4)}}{=} v_j \mathbf{e^j} \stackrel{\text{(2)}}{=} v_j(g^{ji} \mathbf{e_i}) \to v^i \mathbf{e_i} = v_j g^{ji} \mathbf{e_i}, \forall i \to v^i = g^{ji}v_j \stackrel{\text{(D.6)}}{=} g^{ij} v_j,\ \text{Q.E.D.}</span>
+                        <div class="qed">∎</div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">v_i = g_{ij} v^j</span></div> 
+                    <span class="equation-number">(6)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        specular to (5).
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">v_i = \mathbf{v} \cdot \mathbf{e_i}</span></div> 
+                    <span class="equation-number">(7)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">\mathbf{v} \cdot \mathbf{e_i} \stackrel{\text{(D.4)}}{=} (v_j \mathbf{e^j}) \cdot \mathbf{e_i} \stackrel{\text{(D.3)}}{=} v_j \delta^j_i = v_i,\ \text{Q.E.D.}</span>
+                        <div class="qed">∎</div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">v^i = \mathbf{v} \cdot \mathbf{e^i}</span></div> 
+                    <span class="equation-number">(8)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        specular to (7).
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\mathbf{u} \cdot \mathbf{v} = g_{ij}u^iv^j</span></div> 
+                    <span class="equation-number">(9)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">\mathbf{u} \cdot \mathbf{v} \stackrel{\text{(D.2)}}{=} (u^i\mathbf{e_i}) \cdot (v^j\mathbf{e_j}) = (\mathbf{e_i} \cdot \mathbf{e_j})u^iv^j \stackrel{\text{(D.5)}}{=} g_{ij}u^iv^j,\ \text{Q.E.D.}</span>
+                        <div class="qed">∎</div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\mathbf{u} \cdot \mathbf{v} = g^{ij}u_iv_j</span></div> 
+                    <span class="equation-number">(10)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        specular to (9).
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="subsection">
+            <h2>Derivatives</h2>
+            <p>For <span class="katex">F:\mathbb{R}^n\to \mathbb{R}</span>, define 
+            <span class="katex">\partial[i] F(x_1,...,x_n) \triangleq \lim_{h\to 0} \frac{F(...,x_i+h,...) - F(...,x_i,...)}{h}</span>.</p>
+            
+            <p>Let <span class="katex">\mathbf{e}</span> and <span class="katex">\mathbf{\bar e}</span> be two bases of a vector space <span class="katex">V</span> 
+            of dimension <em>n</em>, with metric tensor having components <span class="katex">g_{ij} = e_i\cdot e_j</span> and 
+            <span class="katex">\bar g_{ij} = \bar e_i \cdot \bar e_j</span>.</p>
+            
+            <p>For <span class="katex">f:V\to \mathbb{R}</span>, define:</p>
+            <ul>
+                <li class="derivative"><strong>Covariant derivative:</strong><br>
+                <span class="katex">\partial_i f \triangleq \partial[i] F_\star</span> where 
+                <span class="katex">F_\star:\mathbb{R}^n\to\mathbb{R}</span> is defined by 
+                <span class="katex">F_\star(x^1,...,x^n) = f(x^ie_i)</span>.<br>
+                <span class="katex">\bar \partial_i f \triangleq \partial[i] \bar F_\star</span> where 
+                <span class="katex">\bar F_\star:\mathbb{R}^n\to\mathbb{R}</span> is defined by 
+                <span class="katex">\bar F_\star(\bar x^1,...,\bar x^n) = f(\bar x^i\bar e_i)</span>.
+                </li>
+                
+                <li class="derivative"><strong>Contravariant derivative:</strong><br>
+                <span class="katex">\partial^i f \triangleq \partial[i] F^\star</span> where 
+                <span class="katex">F^\star:\mathbb{R}^n\to\mathbb{R}</span> is defined by 
+                <span class="katex">F^\star(x_1,...,x_n) = f(x_ie^i)</span>.<br>
+                <span class="katex">\bar \partial^i f \triangleq \partial[i] \bar F^\star</span> where 
+                <span class="katex">\bar F^\star:\mathbb{R}^n\to\mathbb{R}</span> is defined by 
+                <span class="katex">\bar F^\star(\bar x_1,...,\bar x_n) = f(\bar x_i\bar e^i)</span>.
+                </li>
+                
+                <li class="derivative"><strong>Squared derivative:</strong><br>
+                <span class="katex">\partial^2 \triangleq \partial^i\partial_i</span> and 
+                <span class="katex">\bar\partial^2 \triangleq \bar\partial^i\bar\partial_i</span>.
+                </li>
+            </ul>
+            
+            <p>Let <span class="katex">\Lambda</span> be the change of basis matrix: 
+            <span class="katex">\mathbf{v} = \bar v^i\mathbf{\bar e_i} = v^i\mathbf{e_i}\implies \bar v^i = \Lambda^i_j v^j</span>.</p>
+            
+            <ul>
+                <li>
+                    <div class="boxed"><span class="katex">e_i = \Lambda^k_i\bar e_k</span> and 
+                    <span class="katex">e^i = g^{ij} \Lambda^k_j\bar e_k</span> and 
+                    <span class="katex">\bar e_i = (\Lambda^{-1})^k_i e_k</span> and 
+                    <span class="katex">\bar e^i = g^{ij}(\Lambda^{-1})^k_j e_k</span></div> 
+                    <span class="equation-number">(11)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">e_i = \delta^j_i e_j = \Lambda^k_j\delta^j_i\bar e_k</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\mathbf{v} = \bar v_i\mathbf{\bar e^i} = v_i\mathbf{e^i}\implies \bar v_i = \bar g_{ij}\Lambda^j_k g^{kl}v_l</span></div> 
+                    <span class="equation-number">(12)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">\bar v_i = g_{ij}\bar v^j = \bar g_{ij}\Lambda^j_k v^k = \bar g_{ij}\Lambda^j_k g^{kl}v_l</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">g = \Lambda^T \bar g\Lambda</span></div> 
+                    <span class="equation-number">(13)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">g_{ij} = e_i \cdot e_j = \Lambda^k_i\bar e_k \cdot \Lambda^l_j \bar e_l = \Lambda^k_i\Lambda^l_j\bar g_{kl}</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\bar g^{-1} = \Lambda g^{-1}\Lambda^T</span></div> 
+                    <span class="equation-number">(14)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof 1:</div>
+                        <span class="katex">g = \Lambda^T \bar g\Lambda
+                        \implies g^{-1} = \Lambda^{-1}\bar g^{-1}(\Lambda^T)^{-1}
+                        \implies \bar g^{-1} = \Lambda g^{-1}\Lambda^{T}</span><br><br>
+                        <div class="proof-title">Proof 2:</div>
+                        <span class="katex">\bar g^{ij}
+                        = \bar e^i \cdot \bar e^j
+                        = \bar g_{ik} \bar e^i \cdot \bar g_{jl} \bar e^j
+                        = \bar g_{ik} \bar e^i \cdot \bar g_{jl} \bar e^j
+                        = \Lambda^k_i\bar e_k \cdot \Lambda^l_j \bar e_l
+                        = \Lambda^k_i\Lambda^l_j\bar g_{kl}</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">F_\star = F^\star\circ g</span></div> 
+                    <span class="equation-number">(15)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">F_\star(x^j,...,x^j) = f(x^ie_i) = f(g_{ij}x^ie^j) = F^\star(g_{i1}x^i,...,g_{in}x^i) = (F^\star\circ g)(x^j,...,x^j)</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">F_\star = \bar F_\star \circ \Lambda</span></div> 
+                    <span class="equation-number">(16)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">F_\star (x^1,...,x^n) = f(x^i e_i) = f(\Lambda^i_j x^j \bar e_j) = \bar F_\star (\Lambda^1_j x^j, ...,\Lambda^n_j x^j) = (\bar F_\star \circ \Lambda) (x^1,...,x^n)</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">F^\star = \bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}</span></div> 
+                    <span class="equation-number">(17)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof 1:</div>
+                        <span class="katex">F^\star = F_\star \circ g^{-1} = \bar F_\star \circ \Lambda\circ g^{-1} = \bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}</span><br>
+                        <div class="proof-title">Proof 2:</div>
+                        <span class="katex">F^\star (x_1,...,x_n) = f(x_ie^i) = f(\bar g_{ij}\Lambda^j_k g^{kl}x_l\bar e^i) = \bar F^\star (\bar g_{1j}\Lambda^j_k g^{kl}x_l, ..., \bar g_{nj}\Lambda^j_k g^{kl}x_l) = (\bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}) (x_1,...,x_n)</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\partial^i = g^{ij}\partial_j</span> and 
+                    <span class="katex">\bar \partial^i = \bar g^{ij}\bar \partial_j</span> and 
+                    <span class="katex">\partial_i = g_{ij}\partial^j</span> and 
+                    <span class="katex">\bar \partial_i = \bar g_{ij}\bar \partial^j</span></div> 
+                    <span class="equation-number">(18)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">\partial_i f(v) = \partial[i] F_\star(x^1,...,x^n) = \partial[i] (F^\star\circ g)(x^1,...,x^n) = \sum_{j} g_{ij}\partial[j] F^\star(x_1,...,x_n) = g_{ij}\partial^j f(v)</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\partial^i= \bar g_{kl}\Lambda^k_j g^{ij}\bar \partial^l</span></div> 
+                    <span class="equation-number">(19)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">\partial^i f(v)
+                        = \partial[i] F^\star(x_1,...,x_n) = \partial[i] (\bar F^\star \circ \bar g \circ \Lambda\circ g^{-1})(x_1,...,x_n)
+                        = \sum_l \bar g_{kl}\Lambda^k_j g^{ij}\partial[l] \bar F^\star(\bar x_1,...,\bar x_n)
+                        = \bar g_{kl}\Lambda^k_j g^{ij}\bar\partial^l f(v)</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\partial_i= \Lambda^j_i\bar\partial_j</span></div> 
+                    <span class="equation-number">(20)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof:</div>
+                        <span class="katex">\partial_i f(v) = \partial[i] F_\star(x^1,...,x^n) = \partial[i] (\bar F_\star \circ \Lambda)(x^1,...,x^n) = \sum_j \Lambda^j_i\partial[j] \bar F_\star(\bar x^1,...,\bar x^n) = \Lambda^j_i\bar \partial_j f(v)</span>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="boxed"><span class="katex">\partial^2 = \bar\partial^2</span></div> 
+                    <span class="equation-number">(21)</span>
+                    <div class="proof">
+                        <div class="proof-title">Proof 1:</div>
+                        <span class="katex">\partial^2
+                        = \partial^i\partial_i
+                        = g^{ij}\partial_j \partial_i
+                        = g^{ij}\Lambda^k_j\bar\partial_k\Lambda^l_i\bar\partial_l
+                        = g^{ij}\Lambda^k_j\Lambda^l_i\bar\partial_k\bar\partial_l
+                        = \bar g^{kl}\bar\partial_k\bar\partial_l
+                        = \bar\partial^l\bar\partial_l
+                        = \partial^2</span><br><br>
+                        <div class="proof-title">Proof 2:</div>
+                        <span class="katex">\begin{aligned}
+                        \partial^2 &= \partial^i\partial_i\\
+                        &= \partial^i g_{ij}\partial^j\\
+                        &= g_{ij}\bar g_{ab}\Lambda^a_c g^{ic}\bar\partial^b \bar g_{pq}\Lambda^p_r g^{jr}\bar\partial^q\\
+                        &= \bar g_{ab}\Lambda^a_c \bar\partial^b \bar g_{pq}\Lambda^p_r g^{cr}\bar\partial^q\\
+                        &= \bar g_{ab} \bar\partial^b \bar g_{pq} \bar g^{ap}\bar\partial^q\\
+                        &= \bar g_{ab} \bar\partial^b \bar\partial^a\\
+                        &= \bar\partial^b \bar\partial_b\\
+                        &= \partial^2
+                        \end{aligned}</span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
     
     <footer>
-        <p>Math Blog Demo | LaTeX powered by MathJax | Refresh page if equations don't render immediately</p>
+        <p>Tensor Calculus Reference - Converted from LaTeX to HTML with KaTeX rendering</p>
     </footer>
-    
+
+    <!-- KaTeX JS for math rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
     <script>
-        function toggleContent(contentId, button) {
-            const content = document.getElementById(contentId);
-            const isHidden = content.style.display === 'none' || content.style.display === '';
-            
-            if (isHidden) {
-                content.style.display = 'block';
-                button.textContent = 'Show Less';
-                button.classList.add('show-less');
-            } else {
-                content.style.display = 'none';
-                button.textContent = button.getAttribute('data-original') || 'Read More';
-                button.classList.remove('show-less');
-            }
-        }
-        
-        // Initialize buttons with original text
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('.read-more-btn');
-            buttons.forEach(button => {
-                button.setAttribute('data-original', button.textContent);
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError: false
             });
-            
-            // Process MathJax after expanding content
-            if (window.MathJax) {
-                const originalToggle = toggleContent;
-                toggleContent = function(contentId, button) {
-                    originalToggle(contentId, button);
-                    setTimeout(() => {
-                        MathJax.typesetPromise && MathJax.typesetPromise();
-                    }, 100);
-                };
-            }
         });
     </script>
 </body>
