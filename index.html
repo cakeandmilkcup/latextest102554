@@ -3,375 +3,384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mathematical Definitions: Covariant and Contravariant Components</title>
-    <!-- Load MathJax for LaTeX rendering -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>Tensor Algebra: Covariant and Contravariant Components</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Georgia', serif;
         }
         
         body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-        }
-        
-        .container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            margin-top: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eaeaea;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
         }
         
         h1 {
+            text-align: center;
             color: #2c3e50;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            color: #7f8c8d;
-            font-size: 1.1rem;
-            font-weight: normal;
-        }
-        
-        .section-title {
-            color: #2980b9;
-            font-size: 1.8rem;
-            margin: 30px 0 20px 0;
+            border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
-            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        
+        .definition, .corollary {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+        
+        .definition:hover, .corollary:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         
         .definition {
-            background-color: #f8f9fa;
-            border-left: 4px solid #3498db;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid #2ecc71;
         }
         
-        .definition:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        .corollary {
+            border-left: 5px solid #e74c3c;
         }
         
-        .definition-title {
+        .eq-number {
+            color: #7f8c8d;
             font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .definition-content {
-            margin: 10px 0;
-            font-size: 1.05rem;
+            float: right;
         }
         
         .math {
-            font-size: 1.1rem;
-            padding: 5px;
-            overflow-x: auto;
+            font-family: "Times New Roman", serif;
+            font-size: 1.1em;
         }
         
-        .definition-note {
-            font-style: italic;
-            color: #7f8c8d;
+        .boxed {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            margin: 5px 0;
+        }
+        
+        .proof-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
             margin-top: 10px;
-            padding-left: 10px;
-            border-left: 2px solid #ecf0f1;
+            transition: background-color 0.3s;
         }
         
-        .symbol-explanation {
-            margin-top: 30px;
-            background-color: #e8f4fc;
-            padding: 20px;
-            border-radius: 8px;
+        .proof-button:hover {
+            background-color: #2980b9;
         }
         
-        .symbol-explanation h3 {
-            color: #2980b9;
-            margin-bottom: 15px;
-        }
-        
-        .symbol-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
+        .proof-content {
+            display: none;
             margin-top: 15px;
+            padding: 15px;
+            background-color: #f1f8ff;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
         }
         
-        .symbol-item {
-            padding: 10px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        .proof-content.show {
+            display: block;
         }
         
-        .symbol {
+        .proof-header {
             font-weight: bold;
-            color: #e74c3c;
+            color: #2c3e50;
+            margin-bottom: 8px;
         }
         
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            padding-top: 20px;
-            border-top: 1px solid #ecf0f1;
+        .qed {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
         }
         
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 15px;
             }
             
-            .container {
-                padding: 20px;
+            .boxed {
+                display: block;
+                overflow-x: auto;
             }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .symbol-list {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .definition-counter {
-            display: inline-block;
-            background-color: #3498db;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 28px;
-            margin-right: 10px;
-            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Mathematical Definitions</h1>
-        <p class="subtitle">Covariant and Contravariant Components in Vector Spaces</p>
-    </header>
+    <h1>Tensor Algebra: Covariant and Contravariant Components</h1>
     
-    <div class="container">
-        <h2 class="section-title">Definitions</h2>
-        
-        <div class="definition">
-            <div class="definition-title">
-                <span class="definition-counter">1</span>
-                Covariant basis
-            </div>
-            <div class="definition-content">
-                of a vector space of dimension <em>n</em>:
-            </div>
-            <div class="math">
-                \[
-                \mathbf{e_j} \triangleq \{\text{any linearly independent basis for which in general is } \mathbf{e_i} \cdot \mathbf{e_j} \neq \delta_{ij}\},
-                \]
-            </div>
-            <div class="definition-content">
-                i.e. not necessarily orthonormal.
-            </div>
-            <div class="definition-note">(D.1)</div>
+    <h2>1. Definitions</h2>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Covariant basis</strong> of a vector space of dimension <em>n</em>: 
+            $\mathbf{e_j} \triangleq$ {any linearly independent basis for which in general is 
+            $\mathbf{e_i} \cdot \mathbf{e_j} \neq \delta_{ij}$}, i.e. not necessarily orthonormal.
+            <span class="eq-number">(D.1)</span>
         </div>
-        
-        <div class="definition">
-            <div class="definition-title">
-                <span class="definition-counter">2</span>
-                Contravariant components
-            </div>
-            <div class="definition-content">
-                of a vector \(\mathbf{v}\):
-            </div>
-            <div class="math">
-                \[
-                v^i \triangleq \{ v^i \mid \mathbf{v} = v^i \mathbf{e_i}\}
-                \]
-            </div>
-            <div class="definition-note">(D.2)</div>
-        </div>
-        
-        <div class="definition">
-            <div class="definition-title">
-                <span class="definition-counter">3</span>
-                Dual (contravariant) basis
-            </div>
-            <div class="definition-content">
-                of a vector space of dimension <em>n</em>:
-            </div>
-            <div class="math">
-                \[
-                \mathbf{e^i} \triangleq \{ \mathbf{e^i} : \mathbf{e^i} \cdot \mathbf{e_j} = \delta^i_j \}
-                \]
-            </div>
-            <div class="definition-note">(D.3)</div>
-        </div>
-        
-        <div class="definition">
-            <div class="definition-title">
-                <span class="definition-counter">4</span>
-                Covariant components
-            </div>
-            <div class="definition-content">
-                of a vector \(\mathbf{v}\):
-            </div>
-            <div class="math">
-                \[
-                v_i \triangleq \{ v_i \mid \mathbf{v} = v_i \mathbf{e^i}\}
-                \]
-            </div>
-            <div class="definition-note">(D.4)</div>
-        </div>
-        
-        <div class="definition">
-            <div class="definition-title">
-                <span class="definition-counter">5</span>
-                Components of the covariant metric tensor
-            </div>
-            <div class="math">
-                \[
-                g_{ij} \triangleq \mathbf{e_i} \cdot \mathbf{e_j};
-                \]
-            </div>
-            <div class="definition-content">
-                the metric tensor can be considered a square matrix, since it only has two covariant indices:
-            </div>
-            <div class="math">
-                \[
-                g \triangleq \{ g_{ij} \};
-                \]
-            </div>
-            <div class="definition-content">
-                for the commutative property of the dot product, the \(g_{ij}\) are symmetric.
-            </div>
-            <div class="definition-note">(D.5)</div>
-        </div>
-        
-        <div class="definition">
-            <div class="definition-title">
-                <span class="definition-counter">6</span>
-                Components of the contravariant metric tensor
-            </div>
-            <div class="math">
-                \[
-                g^{ij} \triangleq \{ h_{ij} : g^{-1} = \{ h_{ij} \}\};
-                \]
-            </div>
-            <div class="definition-content">
-                these are the elements of the inverse of the covariant metric tensor/matrix \(g^{-1}\), and for the properties of the inverse of a symmetric matrix, they're also symmetric.
-            </div>
-            <div class="definition-note">(D.6)</div>
-        </div>
-        
-        <div class="symbol-explanation">
-            <h3>Notation Guide</h3>
-            <p>Key symbols used in these definitions:</p>
-            <div class="symbol-list">
-                <div class="symbol-item">
-                    <span class="symbol">\(\mathbf{e_i}, \mathbf{e_j}\)</span>: Covariant basis vectors
-                </div>
-                <div class="symbol-item">
-                    <span class="symbol">\(\mathbf{e^i}\)</span>: Contravariant (dual) basis vectors
-                </div>
-                <div class="symbol-item">
-                    <span class="symbol">\(v^i\)</span>: Contravariant components of vector \(\mathbf{v}\)
-                </div>
-                <div class="symbol-item">
-                    <span class="symbol">\(v_i\)</span>: Covariant components of vector \(\mathbf{v}\)
-                </div>
-                <div class="symbol-item">
-                    <span class="symbol">\(g_{ij}\)</span>: Covariant metric tensor components
-                </div>
-                <div class="symbol-item">
-                    <span class="symbol">\(g^{ij}\)</span>: Contravariant metric tensor components
-                </div>
-                <div class="symbol-item">
-                    <span class="symbol">\(\delta_{ij}, \delta^i_j\)</span>: Kronecker delta (1 if i=j, 0 otherwise)
-                </div>
-                <div class="symbol-item">
-                    <span class="symbol">\(\triangleq\)</span>: Defined as
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>Mathematical definitions presented in HTML with LaTeX rendering via MathJax</p>
-            <p>These definitions describe the fundamental concepts of covariant and contravariant components in vector spaces.</p>
-        </footer>
     </div>
     
-    <script>
-        // Configure MathJax
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true,
-                processEnvironments: true
-            },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-            }
-        };
+    <div class="definition">
+        <div class="math">
+            <strong>Contravariant components</strong> of a vector $\mathbf{v}$: 
+            $v^i \triangleq \{ v^i \mid \mathbf{v} = v^i \mathbf{e_i}\}$.
+            <span class="eq-number">(D.2)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Dual (contravariant) basis</strong> of a vector space of dimension <em>n</em>: 
+            $\mathbf{e^i} \triangleq \{ \mathbf{e^i} : \mathbf{e^i} \cdot \mathbf{e_j} = \delta^i_j \}$.
+            <span class="eq-number">(D.3)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Covariant components</strong> of a vector $\mathbf{v}$: 
+            $v_i \triangleq \{ v_i \mid \mathbf{v} = v_i \mathbf{e^i}\}$.
+            <span class="eq-number">(D.4)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Components of the covariant metric tensor</strong> 
+            $g_{ij} \triangleq \mathbf{e_i} \cdot \mathbf{e_j}$; the metric tensor can be considered a square matrix, since it only has two covariant indices: $g \triangleq \{ g_{ij} \}$; for the commutative property of the dot product, the $g_{ij}$ are symmetric.
+            <span class="eq-number">(D.5)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Components of the contravariant metric tensor</strong> 
+            $g^{ij} \triangleq \{ h_{ij} : g^{-1} = \{ h_{ij} \}\}$; these are the elements of the inverse of the covariant metric tensor/matrix $g^{-1}$, and for the properties of the inverse of a symmetric matrix, they're also symmetric.
+            <span class="eq-number">(D.6)</span>
+        </div>
+    </div>
+    
+    <h2>2. Corollaries</h2>
+    
+    <ul>
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$g^{ij}g_{jk} = \delta^i_k$</div>
+                <span class="eq-number">(1)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof1')">Proof</button>
+                
+                <div id="proof1" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    From the properties of the inverse matrix (D.6).
+                </div>
+            </div>
+        </li>
         
-        // Add interactivity to definition boxes
-        document.addEventListener('DOMContentLoaded', function() {
-            const definitions = document.querySelectorAll('.definition');
-            
-            definitions.forEach(def => {
-                def.addEventListener('click', function() {
-                    this.style.backgroundColor = this.style.backgroundColor === 'rgb(248, 249, 250)' ? '#f0f7ff' : '#f8f9fa';
-                });
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$\mathbf{e^i} = g^{ij} \mathbf{e_j}$</div>
+                <span class="eq-number">(2)</span>
                 
-                // Keyboard navigation
-                def.setAttribute('tabindex', '0');
-                def.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        this.style.backgroundColor = this.style.backgroundColor === 'rgb(248, 249, 250)' ? '#f0f7ff' : '#f8f9fa';
-                    }
-                });
-            });
-            
-            // Highlight math on hover
-            const mathElements = document.querySelectorAll('.math');
-            mathElements.forEach(math => {
-                math.addEventListener('mouseenter', function() {
-                    this.style.backgroundColor = '#f0f7ff';
-                });
+                <button class="proof-button" onclick="toggleProof('proof2')">Proof</button>
                 
-                math.addEventListener('mouseleave', function() {
-                    this.style.backgroundColor = '';
-                });
-            });
-        });
+                <div id="proof2" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Let's suppose that $\{A^{ij} \mid \mathbf{e^i} = A^{ij} \mathbf{e_j}\}$; we will show that $A^{ij} = g^{ij}$. 
+                    Taking the dot product of both sides with $\mathbf{e_k}$:
+                    $\mathbf{e^i} \cdot \mathbf{e_k} = (A^{ij} \mathbf{e_j}) \cdot \mathbf{e_k} \stackrel{\text{(D.3,D.5)}}{\to} A^{ij}g_{jk} = \delta^i_k$; 
+                    multiplying both sides by $g^{mk}$:
+                    $g^{mk}A^{ij}g_{jk} = g^{mk}\delta^i_k \stackrel{\text{(D.5)}}{\to} g^{mk}g_{kj}A^{ij} = g^{mi} \stackrel{\text{(1)}}{\to} \delta^m_j A^{ij} = g^{mi} \to A^{im} = g^{mi}\stackrel{\text{(D.6)}}{=} g^{im},\ \text{Q.E.D.}$
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$\mathbf{e^i} \cdot \mathbf{e^j} = g^{ij}$</div>
+                <span class="eq-number">(3)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof3')">Proof</button>
+                
+                <div id="proof3" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    $\mathbf{e^i} \stackrel{\text{(2)}}{=} g^{ik} \mathbf{e_k}; \mathbf{e^j} \stackrel{\text{(2)}}{=} g^{jm} \mathbf{e_m} \to \mathbf{e^i} \cdot \mathbf{e^j} = g^{ik} g^{jm} (\mathbf{e_k} \cdot \mathbf{e_m}) \stackrel{\text{(D.5)}}{=} g^{ik}g^{jm}g_{km} \stackrel{\text{(1)}}{=} \delta^i_m g^{jm} = g^{ji} \stackrel{\text{(D.6)}}{=} g^{ij},\ \text{Q.E.D.}$
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$\mathbf{e_i} = g_{ij} \mathbf{e^j}$</div>
+                <span class="eq-number">(4)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof4')">Proof</button>
+                
+                <div id="proof4" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Let's suppose that $\{B_{ij} \mid \mathbf{e_i} = B_{ij} \mathbf{e^j}\}$; we will show that $B_{ij} = g_{ij}$. 
+                    Taking the dot product of both sides with $\mathbf{e^k}$: 
+                    $\mathbf{e_i} \cdot \mathbf{e^k} = (B_{ij} \mathbf{e^j}) \cdot \mathbf{e^k} \stackrel{\text{(D.3,3)}}{\to} B_{ij}g^{jk} = \delta_i^k$; 
+                    multiplying both sides by $g_{mk}$:
+                    $g_{mk}B_{ij}g^{jk} = g_{mk}\delta_i^k \stackrel{\text{(D.5)}}{\to} g_{mk}g^{kj}B_{ij} = g_{mi} \stackrel{\text{(1)}}{\to} \delta_m^j B_{ij} = g_{mi} \to B_{im} = g_{mi} \stackrel{\text{(D.5)}}{=} g_{im},\ \text{Q.E.D.}$
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$v^i = g^{ij} v_j$</div>
+                <span class="eq-number">(5)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof5')">Proof</button>
+                
+                <div id="proof5" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    $\mathbf{v} \stackrel{\text{(D.2)}}{=} v^i \mathbf{e_i}; \mathbf{v} \stackrel{\text{(D.4)}}{=} v_j \mathbf{e^j} \stackrel{\text{(2)}}{=} v_j(g^{ji} \mathbf{e_i}) \to v^i \mathbf{e_i} = v_j g^{ji} \mathbf{e_i}, \forall i \to v^i = g^{ji}v_j \stackrel{\text{(D.6)}}{=} g^{ij} v_j,\ \text{Q.E.D.}$
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$v_i = g_{ij} v^j$</div>
+                <span class="eq-number">(6)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof6')">Proof</button>
+                
+                <div id="proof6" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Specular to (5).
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$v_i = \mathbf{v} \cdot \mathbf{e_i}$</div>
+                <span class="eq-number">(7)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof7')">Proof</button>
+                
+                <div id="proof7" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    $\mathbf{v} \cdot \mathbf{e_i} \stackrel{\text{(D.4)}}{=} (v_j \mathbf{e^j}) \cdot \mathbf{e_i} \stackrel{\text{(D.3)}}{=} v_j \delta^j_i = v_i,\ \text{Q.E.D.}$
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$v^i = \mathbf{v} \cdot \mathbf{e^i}$</div>
+                <span class="eq-number">(8)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof8')">Proof</button>
+                
+                <div id="proof8" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Specular to (7).
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$\mathbf{u} \cdot \mathbf{v} = g_{ij}u^iv^j$</div>
+                <span class="eq-number">(9)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof9')">Proof</button>
+                
+                <div id="proof9" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    $\mathbf{u} \cdot \mathbf{v} \stackrel{\text{(D.2)}}{=} (u^i\mathbf{e_i}) \cdot (v^j\mathbf{e_j}) = (\mathbf{e_i} \cdot \mathbf{e_j})u^iv^j \stackrel{\text{(D.5)}}{=} g_{ij}u^iv^j,\ \text{Q.E.D.}$
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">$\mathbf{u} \cdot \mathbf{v} = g^{ij}u_iv_j$</div>
+                <span class="eq-number">(10)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof10')">Proof</button>
+                
+                <div id="proof10" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Specular to (9).
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    
+    <div style="text-align: center; margin-top: 40px; color: #7f8c8d; font-size: 0.9em;">
+        Tensor Algebra Reference • Click "Proof" to show/hide proofs
+    </div>
+
+    <script>
+        function toggleProof(proofId) {
+            const proofContent = document.getElementById(proofId);
+            proofContent.classList.toggle('show');
+            
+            // Update button text
+            const button = proofContent.previousElementSibling;
+            if (proofContent.classList.contains('show')) {
+                button.textContent = 'Hide Proof';
+            } else {
+                button.textContent = 'Proof';
+            }
+        }
+        
+        // Initialize MathJax for rendering LaTeX
+        if (typeof MathJax !== 'undefined') {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        }
     </script>
+    
+    <!-- Load MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
