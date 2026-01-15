@@ -25,10 +25,43 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-    <style>
+     <style>
+        :root {
+            /* Light theme variables (default) */
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --card-bg: white;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --proof-bg: #f1f8ff;
+            --box-bg: #f8f9fa;
+            --border-color: #ddd;
+            --eq-number-color: #7f8c8d;
+        }
+        
+        [data-theme="dark"] {
+            /* Dark theme variables */
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #bb86fc;
+            --accent-color: #03dac6;
+            --success-color: #03dac5;
+            --danger-color: #cf6679;
+            --card-bg: #1e1e1e;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --proof-bg: #1a2a3a;
+            --box-bg: #2a2a2a;
+            --border-color: #444;
+            --eq-number-color: #aaa;
+        }
+        
         * {
             box-sizing: border-box;
             font-family: 'Georgia', serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         
         body {
@@ -36,52 +69,52 @@
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
+            color: var(--text-color);
+            background-color: var(--bg-color);
         }
         
         h1 {
             text-align: center;
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 10px;
         }
         
         h2 {
-            color: #2c3e50;
-            border-left: 5px solid #3498db;
+            color: var(--primary-color);
+            border-left: 5px solid var(--accent-color);
             padding-left: 15px;
             margin-top: 30px;
         }
         
         h3 {
-            color: #2c3e50;
+            color: var(--primary-color);
             margin-top: 25px;
         }
         
         .definition, .corollary {
-            background-color: white;
+            background-color: var(--card-bg);
             border-radius: 8px;
             padding: 15px 20px;
             margin: 15px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px var(--shadow-color);
             transition: box-shadow 0.3s;
         }
         
         .definition:hover, .corollary:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 12px var(--shadow-color);
         }
         
         .definition {
-            border-left: 5px solid #2ecc71;
+            border-left: 5px solid var(--success-color);
         }
         
         .corollary {
-            border-left: 5px solid #e74c3c;
+            border-left: 5px solid var(--danger-color);
         }
         
         .eq-number {
-            color: #7f8c8d;
+            color: var(--eq-number-color);
             font-weight: bold;
             float: right;
         }
@@ -95,13 +128,13 @@
             display: inline-block;
             padding: 5px 10px;
             margin: 5px 0;
-            border: 2px solid #3498db;
+            border: 2px solid var(--accent-color);
             border-radius: 4px;
-            background-color: #f8f9fa;
+            background-color: var(--box-bg);
         }
         
         .proof-button {
-            background-color: #3498db;
+            background-color: var(--accent-color);
             color: white;
             border: none;
             padding: 8px 16px;
@@ -109,20 +142,21 @@
             cursor: pointer;
             font-size: 0.9em;
             margin-top: 10px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
         
         .proof-button:hover {
-            background-color: #2980b9;
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
         }
         
         .proof-content {
             display: none;
             margin-top: 15px;
             padding: 15px;
-            background-color: #f1f8ff;
+            background-color: var(--proof-bg);
             border-radius: 6px;
-            border-left: 4px solid #3498db;
+            border-left: 4px solid var(--accent-color);
         }
         
         .proof-content.show {
@@ -131,7 +165,7 @@
         
         .proof-header {
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--primary-color);
             margin-bottom: 8px;
         }
         
@@ -149,6 +183,71 @@
             margin-bottom: 10px;
         }
         
+        /* Dark mode toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            width: 60px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            z-index: 100;
+        }
+        
+        .theme-toggle:focus {
+            outline: 2px solid var(--primary-color);
+        }
+        
+        .theme-toggle span {
+            font-size: 12px;
+            line-height: 1;
+        }
+        
+        .theme-toggle .toggle-circle {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            top: 3px;
+            left: 3px;
+        }
+        
+        [data-theme="dark"] .theme-toggle .toggle-circle {
+            transform: translateX(30px);
+        }
+        
+        /* Theme indicator text */
+        .theme-indicator {
+            position: fixed;
+            top: 55px;
+            right: 20px;
+            font-size: 12px;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            padding: 3px 8px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            z-index: 99;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        
+        .theme-indicator.show {
+            opacity: 0.8;
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -157,6 +256,16 @@
             .boxed {
                 display: block;
                 overflow-x: auto;
+            }
+            
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .theme-indicator {
+                top: 45px;
+                right: 10px;
             }
         }
     </style>
@@ -649,6 +758,76 @@
                 MathJax.typesetPromise([proofContent]);
             }
         }
+
+        // Dark mode functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIndicator = document.getElementById('themeIndicator');
+            const body = document.body;
+            
+            // Check for saved theme preference or prefer dark mode if user's system prefers it
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                enableDarkMode();
+            }
+            
+            // Toggle theme on button click
+            themeToggle.addEventListener('click', function() {
+                const isDark = body.getAttribute('data-theme') === 'dark';
+                
+                if (isDark) {
+                    disableDarkMode();
+                } else {
+                    enableDarkMode();
+                }
+                
+                // Show indicator
+                themeIndicator.textContent = isDark ? 'Light mode activated' : 'Dark mode activated';
+                themeIndicator.classList.add('show');
+                
+                setTimeout(() => {
+                    themeIndicator.classList.remove('show');
+                }, 1500);
+            });
+            
+            // Function to enable dark mode
+            function enableDarkMode() {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.setAttribute('aria-label', 'Switch to light mode');
+                
+                // Update MathJax colors for dark mode
+                if (typeof MathJax !== 'undefined') {
+                    MathJax.texReset();
+                }
+            }
+            
+            // Function to disable dark mode
+            function disableDarkMode() {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+                
+                // Update MathJax colors for light mode
+                if (typeof MathJax !== 'undefined') {
+                    MathJax.texReset();
+                }
+            }
+            
+            // Listen for system theme changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                // Only auto-switch if user hasn't explicitly set a preference
+                if (!localStorage.getItem('theme')) {
+                    if (e.matches) {
+                        enableDarkMode();
+                    } else {
+                        disableDarkMode();
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
