@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Blog with LaTeX & Read More</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4CAF50;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .math-section {
+            background: #f8f9fa;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .definition {
+            background: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .expandable-section {
+            background: #fff9e6;
+            border: 1px solid #ffd54f;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .hidden-content {
+            display: none;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            margin-top: 15px;
+        }
+        
+        .read-more-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        .read-more-btn:hover {
+            background: #45a049;
+        }
+        
+        .read-more-btn.show-less {
+            background: #2196F3;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .latex-example {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mathematics Blog with LaTeX</h1>
+            <p>A demonstration of inline equations and expandable content</p>
+        </header>
+        
+        <section>
+            <h2>Introduction to Tensor Analysis</h2>
+            
+            <p>In differential geometry and tensor analysis, we deal with various coordinate systems and basis vectors. Let's explore some fundamental definitions.</p>
+            
+            <div class="definition">
+                <h3>Basis Vectors and Components</h3>
+                <p><strong>Covariant basis</strong> of a vector space of dimension $n$:</p>
+                <p>$$\mathbf{e}_j \triangleq \{\text{any linearly independent basis}\}$$</p>
+                <p>where in general $\mathbf{e}_i \cdot \mathbf{e}_j \neq \delta_{ij}$ (not necessarily orthonormal).</p>
+            </div>
+            
+            <div class="expandable-section">
+                <h3>Detailed Explanation of Contravariant Components</h3>
+                <p>For any vector $\mathbf{v}$ in our space, we can express it in terms of basis vectors.</p>
+                
+                <div class="hidden-content" id="content1">
+                    <p><strong>Contravariant components</strong> of a vector $\mathbf{v}$ are defined as:</p>
+                    <p>$$v^i \triangleq \{ v^i \mid \mathbf{v} = v^i \mathbf{e}_i \}$$</p>
+                    <p>This uses the Einstein summation convention where repeated indices are summed over.</p>
+                    
+                    <p>For example, in 3D space:</p>
+                    <p>$$\mathbf{v} = v^1 \mathbf{e}_1 + v^2 \mathbf{e}_2 + v^3 \mathbf{e}_3$$</p>
+                    
+                    <p>The transformation properties of these components under coordinate changes define their "contravariant" nature.</p>
+                </div>
+                
+                <button class="read-more-btn" onclick="toggleContent('content1', this)">
+                    Read More
+                </button>
+            </div>
+            
+            <div class="math-section">
+                <h3>Dual Basis System</h3>
+                <p><strong>Dual (contravariant) basis</strong> of a vector space of dimension $n$:</p>
+                <p>$$\mathbf{e}^i \triangleq \{ \mathbf{e}^i : \mathbf{e}^i \cdot \mathbf{e}_j = \delta^i_j \}$$</p>
+                
+                <p>Where $\delta^i_j$ is the Kronecker delta:</p>
+                <p>$$\delta^i_j = \begin{cases} 1 & \text{if } i = j \\ 0 & \text{if } i \neq j \end{cases}$$</p>
+            </div>
+            
+            <div class="expandable-section">
+                <h3>Advanced Tensor Operations</h3>
+                <p>Tensor contraction and index manipulation are essential operations.</p>
+                
+                <div class="hidden-content" id="content2">
+                    <h4>Metric Tensor</h4>
+                    <p>The metric tensor $g_{ij}$ defines the inner product:</p>
+                    <p>$$g_{ij} = \mathbf{e}_i \cdot \mathbf{e}_j$$</p>
+                    
+                    <h4>Raising and Lowering Indices</h4>
+                    <p>We can convert between covariant and contravariant components:</p>
+                    <p>$$v_i = g_{ij} v^j$$</p>
+                    <p>$$v^i = g^{ij} v_j$$</p>
+                    
+                    <p>where $g^{ij}$ is the inverse metric tensor satisfying:</p>
+                    <p>$$g^{ik} g_{kj} = \delta^i_j$$</p>
+                    
+                    <h4>Christoffel Symbols</h4>
+                    <p>For covariant differentiation, we need Christoffel symbols:</p>
+                    <p>$$\Gamma^k_{ij} = \frac{1}{2} g^{km} \left( \frac{\partial g_{jm}}{\partial x^i} + \frac{\partial g_{im}}{\partial x^j} - \frac{\partial g_{ij}}{\partial x^m} \right)$$</p>
+                </div>
+                
+                <button class="read-more-btn" onclick="toggleContent('content2', this)">
+                    Show Advanced Mathematics
+                </button>
+            </div>
+            
+            <div class="math-section">
+                <h3>Example Calculations</h3>
+                <p>Let's consider a simple 2D example with polar coordinates.</p>
+                
+                <div class="expandable-section">
+                    <p>The basis vectors in polar coordinates are:</p>
+                    <p>$$\mathbf{e}_r = \frac{\partial \mathbf{r}}{\partial r}, \quad \mathbf{e}_\theta = \frac{\partial \mathbf{r}}{\partial \theta}$$</p>
+                    
+                    <div class="hidden-content" id="content3">
+                        <p>Where $\mathbf{r} = (r\cos\theta, r\sin\theta)$ in Cartesian coordinates.</p>
+                        
+                        <p>Calculating these:</p>
+                        <p>$$\mathbf{e}_r = (\cos\theta, \sin\theta)$$</p>
+                        <p>$$\mathbf{e}_\theta = (-r\sin\theta, r\cos\theta)$$</p>
+                        
+                        <p>The metric tensor components:</p>
+                        <p>$$g_{rr} = \mathbf{e}_r \cdot \mathbf{e}_r = 1$$</p>
+                        <p>$$g_{r\theta} = \mathbf{e}_r \cdot \mathbf{e}_\theta = 0$$</p>
+                        <p>$$g_{\theta\theta} = \mathbf{e}_\theta \cdot \mathbf{e}_\theta = r^2$$</p>
+                        
+                        <p>So the metric is:</p>
+                        <p>$$g_{ij} = \begin{pmatrix} 1 & 0 \\ 0 & r^2 \end{pmatrix}$$</p>
+                        
+                        <p>And its inverse:</p>
+                        <p>$$g^{ij} = \begin{pmatrix} 1 & 0 \\ 0 & 1/r^2 \end{pmatrix}$$</p>
+                    </div>
+                    
+                    <button class="read-more-btn" onclick="toggleContent('content3', this)">
+                        Show Detailed Calculation
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <div class="latex-example">
+            <h3>LaTeX Code Examples</h3>
+            <pre><code>Inline: $E = mc^2$ or \( \nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0} \)
+
+Display: $$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$
+
+Matrices: $$\begin{pmatrix} a & b \\ c & d \end{pmatrix}$$
+
+Sums: $$\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}$$</code></pre>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Math Blog Demo | LaTeX powered by MathJax | Refresh page if equations don't render immediately</p>
+    </footer>
+    
+    <script>
+        function toggleContent(contentId, button) {
+            const content = document.getElementById(contentId);
+            const isHidden = content.style.display === 'none' || content.style.display === '';
+            
+            if (isHidden) {
+                content.style.display = 'block';
+                button.textContent = 'Show Less';
+                button.classList.add('show-less');
+            } else {
+                content.style.display = 'none';
+                button.textContent = button.getAttribute('data-original') || 'Read More';
+                button.classList.remove('show-less');
+            }
+        }
+        
+        // Initialize buttons with original text
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.read-more-btn');
+            buttons.forEach(button => {
+                button.setAttribute('data-original', button.textContent);
+            });
+            
+            // Process MathJax after expanding content
+            if (window.MathJax) {
+                const originalToggle = toggleContent;
+                toggleContent = function(contentId, button) {
+                    originalToggle(contentId, button);
+                    setTimeout(() => {
+                        MathJax.typesetPromise && MathJax.typesetPromise();
+                    }, 100);
+                };
+            }
+        });
+    </script>
+</body>
+</html>
