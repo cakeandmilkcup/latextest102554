@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tensor Algebra: Covariant and Contravariant Components</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                packages: {'[+]': ['ams']}
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        console.log('MathJax initialized');
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -73,17 +94,17 @@
         .boxed {
             display: inline-block;
             padding: 5px 10px;
+            margin: 5px 0;
             border: 2px solid #3498db;
             border-radius: 4px;
             background-color: #f8f9fa;
-            margin: 5px 0;
         }
         
         .proof-button {
             background-color: #3498db;
             color: white;
             border: none;
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.9em;
@@ -147,33 +168,33 @@
     
     <div class="definition">
         <div class="math">
-            <strong>Covariant basis</strong> of a vector space of dimension <em>n</em>: 
-            $\mathbf{e_j} \triangleq$ {any linearly independent basis for which in general is 
-            $\mathbf{e_i} \cdot \mathbf{e_j} \neq \delta_{ij}$}, i.e. not necessarily orthonormal.
+            <strong>Covariant basis</strong> of a vector space of dimension \(n\): 
+            \(\mathbf{e_j} \triangleq\) {any linearly independent basis for which in general is 
+            \(\mathbf{e_i} \cdot \mathbf{e_j} \neq \delta_{ij}\)}, i.e. not necessarily orthonormal.
             <span class="eq-number">(D.1)</span>
         </div>
     </div>
     
     <div class="definition">
         <div class="math">
-            <strong>Contravariant components</strong> of a vector $\mathbf{v}$: 
-            $v^i \triangleq \{ v^i \mid \mathbf{v} = v^i \mathbf{e_i}\}$.
+            <strong>Contravariant components</strong> of a vector \(\mathbf{v}\): 
+            \(v^i \triangleq \{ v^i \mid \mathbf{v} = v^i \mathbf{e_i}\}\).
             <span class="eq-number">(D.2)</span>
         </div>
     </div>
     
     <div class="definition">
         <div class="math">
-            <strong>Dual (contravariant) basis</strong> of a vector space of dimension <em>n</em>: 
-            $\mathbf{e^i} \triangleq \{ \mathbf{e^i} : \mathbf{e^i} \cdot \mathbf{e_j} = \delta^i_j \}$.
+            <strong>Dual (contravariant) basis</strong> of a vector space of dimension \(n\): 
+            \(\mathbf{e^i} \triangleq \{ \mathbf{e^i} : \mathbf{e^i} \cdot \mathbf{e_j} = \delta^i_j \}\).
             <span class="eq-number">(D.3)</span>
         </div>
     </div>
     
     <div class="definition">
         <div class="math">
-            <strong>Covariant components</strong> of a vector $\mathbf{v}$: 
-            $v_i \triangleq \{ v_i \mid \mathbf{v} = v_i \mathbf{e^i}\}$.
+            <strong>Covariant components</strong> of a vector \(\mathbf{v}\): 
+            \(v_i \triangleq \{ v_i \mid \mathbf{v} = v_i \mathbf{e^i}\}\).
             <span class="eq-number">(D.4)</span>
         </div>
     </div>
@@ -181,7 +202,7 @@
     <div class="definition">
         <div class="math">
             <strong>Components of the covariant metric tensor</strong> 
-            $g_{ij} \triangleq \mathbf{e_i} \cdot \mathbf{e_j}$; the metric tensor can be considered a square matrix, since it only has two covariant indices: $g \triangleq \{ g_{ij} \}$; for the commutative property of the dot product, the $g_{ij}$ are symmetric.
+            \(g_{ij} \triangleq \mathbf{e_i} \cdot \mathbf{e_j}\); the metric tensor can be considered a square matrix, since it only has two covariant indices: \(g \triangleq \{ g_{ij} \}\); for the commutative property of the dot product, the \(g_{ij}\) are symmetric.
             <span class="eq-number">(D.5)</span>
         </div>
     </div>
@@ -189,7 +210,7 @@
     <div class="definition">
         <div class="math">
             <strong>Components of the contravariant metric tensor</strong> 
-            $g^{ij} \triangleq \{ h_{ij} : g^{-1} = \{ h_{ij} \}\}$; these are the elements of the inverse of the covariant metric tensor/matrix $g^{-1}$, and for the properties of the inverse of a symmetric matrix, they're also symmetric.
+            \(g^{ij} \triangleq \{ h_{ij} : g^{-1} = \{ h_{ij} \}\}\); these are the elements of the inverse of the covariant metric tensor/matrix \(g^{-1}\), and for the properties of the inverse of a symmetric matrix, they're also symmetric.
             <span class="eq-number">(D.6)</span>
         </div>
     </div>
@@ -199,7 +220,7 @@
     <ul>
         <li>
             <div class="corollary">
-                <div class="boxed math">$g^{ij}g_{jk} = \delta^i_k$</div>
+                <div class="boxed math">\(g^{ij}g_{jk} = \delta^i_k\)</div>
                 <span class="eq-number">(1)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof1')">Proof</button>
@@ -213,18 +234,18 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$\mathbf{e^i} = g^{ij} \mathbf{e_j}$</div>
+                <div class="boxed math">\(\mathbf{e^i} = g^{ij} \mathbf{e_j}\)</div>
                 <span class="eq-number">(2)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof2')">Proof</button>
                 
                 <div id="proof2" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    Let's suppose that $\{A^{ij} \mid \mathbf{e^i} = A^{ij} \mathbf{e_j}\}$; we will show that $A^{ij} = g^{ij}$. 
-                    Taking the dot product of both sides with $\mathbf{e_k}$:
-                    $\mathbf{e^i} \cdot \mathbf{e_k} = (A^{ij} \mathbf{e_j}) \cdot \mathbf{e_k} \stackrel{\text{(D.3,D.5)}}{\to} A^{ij}g_{jk} = \delta^i_k$; 
-                    multiplying both sides by $g^{mk}$:
-                    $g^{mk}A^{ij}g_{jk} = g^{mk}\delta^i_k \stackrel{\text{(D.5)}}{\to} g^{mk}g_{kj}A^{ij} = g^{mi} \stackrel{\text{(1)}}{\to} \delta^m_j A^{ij} = g^{mi} \to A^{im} = g^{mi}\stackrel{\text{(D.6)}}{=} g^{im},\ \text{Q.E.D.}$
+                    Let's suppose that \(\{A^{ij} \mid \mathbf{e^i} = A^{ij} \mathbf{e_j}\}\); we will show that \(A^{ij} = g^{ij}\). 
+                    Taking the dot product of both sides with \(\mathbf{e_k}\):
+                    \(\mathbf{e^i} \cdot \mathbf{e_k} = (A^{ij} \mathbf{e_j}) \cdot \mathbf{e_k} \stackrel{\text{(D.3,D.5)}}{\to} A^{ij}g_{jk} = \delta^i_k\); 
+                    multiplying both sides by \(g^{mk}\):
+                    \(g^{mk}A^{ij}g_{jk} = g^{mk}\delta^i_k \stackrel{\text{(D.5)}}{\to} g^{mk}g_{kj}A^{ij} = g^{mi} \stackrel{\text{(1)}}{\to} \delta^m_j A^{ij} = g^{mi} \to A^{im} = g^{mi}\stackrel{\text{(D.6)}}{=} g^{im},\ \text{Q.E.D.}\)
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -232,14 +253,14 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$\mathbf{e^i} \cdot \mathbf{e^j} = g^{ij}$</div>
+                <div class="boxed math">\(\mathbf{e^i} \cdot \mathbf{e^j} = g^{ij}\)</div>
                 <span class="eq-number">(3)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof3')">Proof</button>
                 
                 <div id="proof3" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    $\mathbf{e^i} \stackrel{\text{(2)}}{=} g^{ik} \mathbf{e_k}; \mathbf{e^j} \stackrel{\text{(2)}}{=} g^{jm} \mathbf{e_m} \to \mathbf{e^i} \cdot \mathbf{e^j} = g^{ik} g^{jm} (\mathbf{e_k} \cdot \mathbf{e_m}) \stackrel{\text{(D.5)}}{=} g^{ik}g^{jm}g_{km} \stackrel{\text{(1)}}{=} \delta^i_m g^{jm} = g^{ji} \stackrel{\text{(D.6)}}{=} g^{ij},\ \text{Q.E.D.}$
+                    \(\mathbf{e^i} \stackrel{\text{(2)}}{=} g^{ik} \mathbf{e_k}; \mathbf{e^j} \stackrel{\text{(2)}}{=} g^{jm} \mathbf{e_m} \to \mathbf{e^i} \cdot \mathbf{e^j} = g^{ik} g^{jm} (\mathbf{e_k} \cdot \mathbf{e_m}) \stackrel{\text{(D.5)}}{=} g^{ik}g^{jm}g_{km} \stackrel{\text{(1)}}{=} \delta^i_m g^{jm} = g^{ji} \stackrel{\text{(D.6)}}{=} g^{ij},\ \text{Q.E.D.}\)
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -247,18 +268,18 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$\mathbf{e_i} = g_{ij} \mathbf{e^j}$</div>
+                <div class="boxed math">\(\mathbf{e_i} = g_{ij} \mathbf{e^j}\)</div>
                 <span class="eq-number">(4)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof4')">Proof</button>
                 
                 <div id="proof4" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    Let's suppose that $\{B_{ij} \mid \mathbf{e_i} = B_{ij} \mathbf{e^j}\}$; we will show that $B_{ij} = g_{ij}$. 
-                    Taking the dot product of both sides with $\mathbf{e^k}$: 
-                    $\mathbf{e_i} \cdot \mathbf{e^k} = (B_{ij} \mathbf{e^j}) \cdot \mathbf{e^k} \stackrel{\text{(D.3,3)}}{\to} B_{ij}g^{jk} = \delta_i^k$; 
-                    multiplying both sides by $g_{mk}$:
-                    $g_{mk}B_{ij}g^{jk} = g_{mk}\delta_i^k \stackrel{\text{(D.5)}}{\to} g_{mk}g^{kj}B_{ij} = g_{mi} \stackrel{\text{(1)}}{\to} \delta_m^j B_{ij} = g_{mi} \to B_{im} = g_{mi} \stackrel{\text{(D.5)}}{=} g_{im},\ \text{Q.E.D.}$
+                    Let's suppose that \(\{B_{ij} \mid \mathbf{e_i} = B_{ij} \mathbf{e^j}\}\); we will show that \(B_{ij} = g_{ij}\). 
+                    Taking the dot product of both sides with \(\mathbf{e^k}\): 
+                    \(\mathbf{e_i} \cdot \mathbf{e^k} = (B_{ij} \mathbf{e^j}) \cdot \mathbf{e^k} \stackrel{\text{(D.3,3)}}{\to} B_{ij}g^{jk} = \delta_i^k\); 
+                    multiplying both sides by \(g_{mk}\):
+                    \(g_{mk}B_{ij}g^{jk} = g_{mk}\delta_i^k \stackrel{\text{(D.5)}}{\to} g_{mk}g^{kj}B_{ij} = g_{mi} \stackrel{\text{(1)}}{\to} \delta_m^j B_{ij} = g_{mi} \to B_{im} = g_{mi} \stackrel{\text{(D.5)}}{=} g_{im},\ \text{Q.E.D.}\)
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -266,14 +287,14 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$v^i = g^{ij} v_j$</div>
+                <div class="boxed math">\(v^i = g^{ij} v_j\)</div>
                 <span class="eq-number">(5)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof5')">Proof</button>
                 
                 <div id="proof5" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    $\mathbf{v} \stackrel{\text{(D.2)}}{=} v^i \mathbf{e_i}; \mathbf{v} \stackrel{\text{(D.4)}}{=} v_j \mathbf{e^j} \stackrel{\text{(2)}}{=} v_j(g^{ji} \mathbf{e_i}) \to v^i \mathbf{e_i} = v_j g^{ji} \mathbf{e_i}, \forall i \to v^i = g^{ji}v_j \stackrel{\text{(D.6)}}{=} g^{ij} v_j,\ \text{Q.E.D.}$
+                    \(\mathbf{v} \stackrel{\text{(D.2)}}{=} v^i \mathbf{e_i}; \mathbf{v} \stackrel{\text{(D.4)}}{=} v_j \mathbf{e^j} \stackrel{\text{(2)}}{=} v_j(g^{ji} \mathbf{e_i}) \to v^i \mathbf{e_i} = v_j g^{ji} \mathbf{e_i}, \forall i \to v^i = g^{ji}v_j \stackrel{\text{(D.6)}}{=} g^{ij} v_j,\ \text{Q.E.D.}\)
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -281,7 +302,7 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$v_i = g_{ij} v^j$</div>
+                <div class="boxed math">\(v_i = g_{ij} v^j\)</div>
                 <span class="eq-number">(6)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof6')">Proof</button>
@@ -296,14 +317,14 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$v_i = \mathbf{v} \cdot \mathbf{e_i}$</div>
+                <div class="boxed math">\(v_i = \mathbf{v} \cdot \mathbf{e_i}\)</div>
                 <span class="eq-number">(7)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof7')">Proof</button>
                 
                 <div id="proof7" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    $\mathbf{v} \cdot \mathbf{e_i} \stackrel{\text{(D.4)}}{=} (v_j \mathbf{e^j}) \cdot \mathbf{e_i} \stackrel{\text{(D.3)}}{=} v_j \delta^j_i = v_i,\ \text{Q.E.D.}$
+                    \(\mathbf{v} \cdot \mathbf{e_i} \stackrel{\text{(D.4)}}{=} (v_j \mathbf{e^j}) \cdot \mathbf{e_i} \stackrel{\text{(D.3)}}{=} v_j \delta^j_i = v_i,\ \text{Q.E.D.}\)
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -311,7 +332,7 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$v^i = \mathbf{v} \cdot \mathbf{e^i}$</div>
+                <div class="boxed math">\(v^i = \mathbf{v} \cdot \mathbf{e^i}\)</div>
                 <span class="eq-number">(8)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof8')">Proof</button>
@@ -326,14 +347,14 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$\mathbf{u} \cdot \mathbf{v} = g_{ij}u^iv^j$</div>
+                <div class="boxed math">\(\mathbf{u} \cdot \mathbf{v} = g_{ij}u^iv^j\)</div>
                 <span class="eq-number">(9)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof9')">Proof</button>
                 
                 <div id="proof9" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    $\mathbf{u} \cdot \mathbf{v} \stackrel{\text{(D.2)}}{=} (u^i\mathbf{e_i}) \cdot (v^j\mathbf{e_j}) = (\mathbf{e_i} \cdot \mathbf{e_j})u^iv^j \stackrel{\text{(D.5)}}{=} g_{ij}u^iv^j,\ \text{Q.E.D.}$
+                    \(\mathbf{u} \cdot \mathbf{v} \stackrel{\text{(D.2)}}{=} (u^i\mathbf{e_i}) \cdot (v^j\mathbf{e_j}) = (\mathbf{e_i} \cdot \mathbf{e_j})u^iv^j \stackrel{\text{(D.5)}}{=} g_{ij}u^iv^j,\ \text{Q.E.D.}\)
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -341,7 +362,7 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">$\mathbf{u} \cdot \mathbf{v} = g^{ij}u_iv_j$</div>
+                <div class="boxed math">\(\mathbf{u} \cdot \mathbf{v} = g^{ij}u_iv_j\)</div>
                 <span class="eq-number">(10)</span>
                 
                 <button class="proof-button" onclick="toggleProof('proof10')">Proof</button>
@@ -362,25 +383,24 @@
     <script>
         function toggleProof(proofId) {
             const proofContent = document.getElementById(proofId);
+            const isVisible = proofContent.classList.contains('show');
+            
+            // Toggle the proof visibility
             proofContent.classList.toggle('show');
             
             // Update button text
             const button = proofContent.previousElementSibling;
-            if (proofContent.classList.contains('show')) {
+            if (!isVisible) {
                 button.textContent = 'Hide Proof';
             } else {
                 button.textContent = 'Proof';
             }
-        }
-        
-        // Initialize MathJax for rendering LaTeX
-        if (typeof MathJax !== 'undefined') {
-            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            
+            // If showing proof, typeset any new math
+            if (!isVisible && typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise([proofContent]);
+            }
         }
     </script>
-    
-    <!-- Load MathJax for LaTeX rendering -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
