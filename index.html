@@ -768,7 +768,8 @@
         }
 
         // Dark mode functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        // Initialize theme on page load
+        function initTheme() {
             const themeToggle = document.getElementById('themeToggle');
             const themeIndicator = document.getElementById('themeIndicator');
             const body = document.body;
@@ -787,55 +788,53 @@
                 
                 if (isDark) {
                     disableDarkMode();
+                    themeIndicator.textContent = 'Light mode activated';
                 } else {
                     enableDarkMode();
+                    themeIndicator.textContent = 'Dark mode activated';
                 }
                 
                 // Show indicator
-                themeIndicator.textContent = isDark ? 'Light mode activated' : 'Dark mode activated';
                 themeIndicator.classList.add('show');
                 
                 setTimeout(() => {
                     themeIndicator.classList.remove('show');
                 }, 1500);
             });
+        }
+        
+        // Function to enable dark mode
+        function enableDarkMode() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
             
-            // Function to enable dark mode
-            function enableDarkMode() {
-                body.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                themeToggle.setAttribute('aria-label', 'Switch to light mode');
-                
-                // Update MathJax colors for dark mode
-                if (typeof MathJax !== 'undefined') {
-                    MathJax.texReset();
-                }
+            body.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            themeToggle.setAttribute('aria-label', 'Switch to light mode');
+            
+            // Update MathJax colors for dark mode
+            if (typeof MathJax !== 'undefined') {
+                MathJax.texReset();
             }
+        }
+        
+        // Function to disable dark mode
+        function disableDarkMode() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
             
-            // Function to disable dark mode
-            function disableDarkMode() {
-                body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-                themeToggle.setAttribute('aria-label', 'Switch to dark mode');
-                
-                // Update MathJax colors for light mode
-                if (typeof MathJax !== 'undefined') {
-                    MathJax.texReset();
-                }
+            body.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+            
+            // Update MathJax colors for light mode
+            if (typeof MathJax !== 'undefined') {
+                MathJax.texReset();
             }
-            
-            // Listen for system theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                // Only auto-switch if user hasn't explicitly set a preference
-                if (!localStorage.getItem('theme')) {
-                    if (e.matches) {
-                        enableDarkMode();
-                    } else {
-                        disableDarkMode();
-                    }
-                }
-            });
-        });
+        }
+        
+        // Initialize when the page loads
+        document.addEventListener('DOMContentLoaded', initTheme);
     </script>
 </body>
 </html>
