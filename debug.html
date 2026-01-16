@@ -25,46 +25,10 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
-</head>
-    
-<style>
-        :root {
-            /* Light theme variables (default) */
-            --bg-color: #f9f9f9;
-            --text-color: #333;
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --success-color: #2ecc71;
-            --danger-color: #e74c3c;
-            --card-bg: white;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --proof-bg: #f1f8ff;
-            --box-bg: #f8f9fa;
-            --border-color: #ddd;
-            --eq-number-color: #7f8c8d;
-        }
-        
-        [data-theme="dark"] {
-            /* Dark theme variables */
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --primary-color: #bb86fc;
-            --accent-color: #03dac6;
-            --success-color: #03dac5;
-            --danger-color: #cf6679;
-            --card-bg: #1e1e1e;
-            --shadow-color: rgba(0, 0, 0, 0.3);
-            --proof-bg: #1a2a3a;
-            --box-bg: #2a2a2a;
-            --border-color: #444;
-            --eq-number-color: #aaa;
-        }
-        
+    <style>
         * {
             box-sizing: border-box;
             font-family: 'Georgia', serif;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         
         body {
@@ -72,52 +36,52 @@
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            color: #333;
+            background-color: #f9f9f9;
         }
         
         h1 {
             text-align: center;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--accent-color);
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
         }
         
         h2 {
-            color: var(--primary-color);
-            border-left: 5px solid var(--accent-color);
+            color: #2c3e50;
+            border-left: 5px solid #3498db;
             padding-left: 15px;
             margin-top: 30px;
         }
         
         h3 {
-            color: var(--primary-color);
+            color: #2c3e50;
             margin-top: 25px;
         }
         
         .definition, .corollary {
-            background-color: var(--card-bg);
+            background-color: white;
             border-radius: 8px;
             padding: 15px 20px;
             margin: 15px 0;
-            box-shadow: 0 4px 6px var(--shadow-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: box-shadow 0.3s;
         }
         
         .definition:hover, .corollary:hover {
-            box-shadow: 0 6px 12px var(--shadow-color);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         
         .definition {
-            border-left: 5px solid var(--success-color);
+            border-left: 5px solid #2ecc71;
         }
         
         .corollary {
-            border-left: 5px solid var(--danger-color);
+            border-left: 5px solid #e74c3c;
         }
         
         .eq-number {
-            color: var(--eq-number-color);
+            color: #7f8c8d;
             font-weight: bold;
             float: right;
         }
@@ -131,13 +95,13 @@
             display: inline-block;
             padding: 5px 10px;
             margin: 5px 0;
-            border: 2px solid var(--accent-color);
+            border: 2px solid #3498db;
             border-radius: 4px;
-            background-color: var(--box-bg);
+            background-color: #f8f9fa;
         }
         
         .proof-button {
-            background-color: var(--accent-color);
+            background-color: #3498db;
             color: white;
             border: none;
             padding: 8px 16px;
@@ -145,21 +109,20 @@
             cursor: pointer;
             font-size: 0.9em;
             margin-top: 10px;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: background-color 0.3s;
         }
         
         .proof-button:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-2px);
+            background-color: #2980b9;
         }
         
         .proof-content {
             display: none;
             margin-top: 15px;
             padding: 15px;
-            background-color: var(--proof-bg);
+            background-color: #f1f8ff;
             border-radius: 6px;
-            border-left: 4px solid var(--accent-color);
+            border-left: 4px solid #3498db;
         }
         
         .proof-content.show {
@@ -168,7 +131,7 @@
         
         .proof-header {
             font-weight: bold;
-            color: var(--primary-color);
+            color: #2c3e50;
             margin-bottom: 8px;
         }
         
@@ -186,71 +149,6 @@
             margin-bottom: 10px;
         }
         
-        /* Dark mode toggle button */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            width: 60px;
-            height: 30px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5px;
-            box-shadow: 0 2px 10px var(--shadow-color);
-            z-index: 100;
-        }
-        
-        .theme-toggle:focus {
-            outline: 2px solid var(--primary-color);
-        }
-        
-        .theme-toggle span {
-            font-size: 12px;
-            line-height: 1;
-        }
-        
-        .theme-toggle .toggle-circle {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background-color: white;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-            top: 3px;
-            left: 3px;
-        }
-        
-        [data-theme="dark"] .theme-toggle .toggle-circle {
-            transform: translateX(30px);
-        }
-        
-        /* Theme indicator text */
-        .theme-indicator {
-            position: fixed;
-            top: 55px;
-            right: 20px;
-            font-size: 12px;
-            color: var(--text-color);
-            background-color: var(--card-bg);
-            padding: 3px 8px;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px var(--shadow-color);
-            z-index: 99;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        
-        .theme-indicator.show {
-            opacity: 0.8;
-        }
-        
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -260,24 +158,113 @@
                 display: block;
                 overflow-x: auto;
             }
-            
-            .theme-toggle {
-                top: 10px;
-                right: 10px;
-            }
-            
-            .theme-indicator {
-                top: 45px;
-                right: 10px;
-            }
         }
-</style>
+
+            /* Your existing styles... keep everything you already have */
     
+    * {
+        box-sizing: border-box;
+        font-family: 'Georgia', serif;
+    }
+    
+    body {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    
+    /* Add dark theme variables */
+    body.dark-theme {
+        color: #e0e0e0;
+        background-color: #121212;
+    }
+    
+    body.dark-theme h1,
+    body.dark-theme h2,
+    body.dark-theme h3 {
+        color: #ffffff;
+        border-color: #64b5f6;
+    }
+    
+    body.dark-theme .definition,
+    body.dark-theme .corollary {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    body.dark-theme .boxed {
+        background-color: #2d2d2d;
+        border-color: #64b5f6;
+        color: #e0e0e0;
+    }
+    
+    body.dark-theme .proof-content {
+        background-color: #1a237e;
+        border-left-color: #64b5f6;
+    }
+    
+    body.dark-theme .proof-header {
+        color: #ffffff;
+    }
+    
+    body.dark-theme .eq-number {
+        color: #b0bec5;
+    }
+    
+    /* Theme toggle button styling */
+    .theme-toggle-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .theme-toggle-button:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    body.dark-theme .theme-toggle-button {
+        background-color: #64b5f6;
+        color: #121212;
+    }
+    
+    body.dark-theme .theme-toggle-button:hover {
+        background-color: #90caf9;
+    }
+    
+    /* Add dark theme for links if you have any */
+    body.dark-theme a {
+        color: #64b5f6;
+    }
+    
+    /* Keep all your existing styles below... */
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+    }
+        
+    </style>
+</head>
 <body>
-    <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-        <span>Dark Mode</span>
-    </button>
+    <div style="text-align: right; margin-bottom: 20px;">
+        <button id="theme-toggle" class="theme-toggle-button">
+            🌙 Dark Mode
+        </button>
+    </div>
     
     <h1>Covariance and Contravariance</h1>
     
@@ -738,7 +725,7 @@
     </ul>
     
     <h2>Debug Page</h2>
-    <a href="../debug.html">Go to Another Page</a>
+    <a href="./debug.html">Go to Another Page</a>
 
     <div style="text-align: center; margin-top: 40px; color: #7f8c8d; font-size: 0.9em;">
         Covariance and Contravariance • Click "Proof" to show/hide proofs
@@ -765,75 +752,35 @@
                 MathJax.typesetPromise([proofContent]);
             }
         }
+    </script>
 
-                // Get DOM elements
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-        const themeText = themeToggle.querySelector('span');
-        const currentThemeElement = document.getElementById('currentTheme');
-        const currentYearElement = document.getElementById('currentYear');
+    <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
         
-        // Set current year in footer
-        currentYearElement.textContent = new Date().getFullYear();
-        
-        // Check for saved theme preference or use preferred color scheme
-        function getInitialTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            
-            if (savedTheme) {
-                return savedTheme;
-            }
-            
-            // Check for system preference
-            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-            if (prefersDarkScheme.matches) {
-                return 'dark';
-            }
-            
-            return 'light';
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Light Mode';
         }
         
-        // Apply theme
-        function applyTheme(theme) {
-            if (theme === 'dark') {
-                document.body.classList.add('dark-theme');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-                themeText.textContent = 'Light Mode';
-                currentThemeElement.textContent = 'Dark';
+        // Toggle theme when button is clicked
+        themeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                themeToggle.textContent = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
             } else {
-                document.body.classList.remove('dark-theme');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-                themeText.textContent = 'Dark Mode';
-                currentThemeElement.textContent = 'Light';
-            }
-            
-            // Save to localStorage
-            localStorage.setItem('theme', theme);
-        }
-        
-        // Toggle theme
-        function toggleTheme() {
-            const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(newTheme);
-        }
-        
-        // Initialize theme
-        const initialTheme = getInitialTheme();
-        applyTheme(initialTheme);
-        
-        // Add event listener to toggle button
-        themeToggle.addEventListener('click', toggleTheme);
-        
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            // Only apply system theme if user hasn't manually selected a theme
-            if (!localStorage.getItem('theme')) {
-                applyTheme(e.matches ? 'dark' : 'light');
+                themeToggle.textContent = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
             }
         });
-    </script>
+    });
+</script>
+    
 </body>
 </html>
