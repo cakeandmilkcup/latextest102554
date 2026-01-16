@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark/Light Theme Toggle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --primary-color: #4a6fa5;
+            --secondary-color: #6c757d;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.4s;
+        }
+
+        .dark-theme {
+            /* Dark theme variables */
+            --bg-color: #121212;
+            --text-color: #f8f9fa;
+            --card-bg: #1e1e1e;
+            --primary-color: #6a9bd8;
+            --secondary-color: #adb5bd;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--secondary-color);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px var(--shadow);
+        }
+
+        .theme-toggle:active {
+            transform: translateY(0);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--secondary-color);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .card p {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .theme-info {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .theme-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Animation for toggle icon */
+        .fa-sun {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">ThemeSwitch</div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h1>Dark/Light Theme Toggle Demo</h1>
+                <p>This page demonstrates a simple dark/light theme toggle. Click the button in the top right corner to switch between themes. Your preference will be saved for your next visit.</p>
+            </section>
+
+            <section class="content-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h2>Customizable Themes</h2>
+                    <p>Easily switch between light and dark themes with a single click. The transition is smooth and visually pleasing.</p>
+                    <p>Each theme uses CSS custom properties (variables) for consistent color application across the entire page.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <h2>Preferences Saved</h2>
+                    <p>Your theme preference is saved in your browser's local storage. When you return, the site will automatically apply your preferred theme.</p>
+                    <p>This provides a personalized experience without requiring an account or login.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h2>Eye Comfort</h2>
+                    <p>Dark theme reduces eye strain in low-light environments and can help conserve battery life on OLED screens.</p>
+                    <p>Light theme offers better readability in well-lit environments and is familiar to most users.</p>
+                </div>
+            </section>
+
+            <div class="theme-info">
+                <h3>Current Theme: <span id="currentTheme">Light</span></h3>
+                <p>The theme toggle uses CSS variables and JavaScript to switch between color schemes. Try it out!</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Dark/Light Theme Toggle Demo &copy; <span id="currentYear"></span> | Made with <i class="fas fa-heart" style="color: #e74c3c;"></i></p>
+        </footer>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const themeText = themeToggle.querySelector('span');
+        const currentThemeElement = document.getElementById('currentTheme');
+        const currentYearElement = document.getElementById('currentYear');
+        
+        // Set current year in footer
+        currentYearElement.textContent = new Date().getFullYear();
+        
+        // Check for saved theme preference or use preferred color scheme
+        function getInitialTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme) {
+                return savedTheme;
+            }
+            
+            // Check for system preference
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            if (prefersDarkScheme.matches) {
+                return 'dark';
+            }
+            
+            return 'light';
+        }
+        
+        // Apply theme
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeText.textContent = 'Light Mode';
+                currentThemeElement.textContent = 'Dark';
+            } else {
+                document.body.classList.remove('dark-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeText.textContent = 'Dark Mode';
+                currentThemeElement.textContent = 'Light';
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('theme', theme);
+        }
+        
+        // Toggle theme
+        function toggleTheme() {
+            const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        }
+        
+        // Initialize theme
+        const initialTheme = getInitialTheme();
+        applyTheme(initialTheme);
+        
+        // Add event listener to toggle button
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            // Only apply system theme if user hasn't manually selected a theme
+            if (!localStorage.getItem('theme')) {
+                applyTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    </script>
+</body>
+</html>
