@@ -3,256 +3,770 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark/Light Theme Toggle</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            /* Light theme variables */
-            --bg-color: #f8f9fa;
-            --text-color: #333;
-            --card-bg: #ffffff;
-            --primary-color: #4a6fa5;
-            --secondary-color: #6c757d;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --transition-speed: 0.4s;
-        }
+    <title>Covariance and Contravariance</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                packages: {'[+]': ['ams']}
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        console.log('MathJax initialized');
+                    });
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-        .dark-theme {
+</head>
+    
+<style>
+        :root {
+            /* Light theme variables (default) */
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --card-bg: white;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --proof-bg: #f1f8ff;
+            --box-bg: #f8f9fa;
+            --border-color: #ddd;
+            --eq-number-color: #7f8c8d;
+        }
+        
+        [data-theme="dark"] {
             /* Dark theme variables */
             --bg-color: #121212;
-            --text-color: #f8f9fa;
+            --text-color: #e0e0e0;
+            --primary-color: #bb86fc;
+            --accent-color: #03dac6;
+            --success-color: #03dac5;
+            --danger-color: #cf6679;
             --card-bg: #1e1e1e;
-            --primary-color: #6a9bd8;
-            --secondary-color: #adb5bd;
-            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --proof-bg: #1a2a3a;
+            --box-bg: #2a2a2a;
+            --border-color: #444;
+            --eq-number-color: #aaa;
         }
-
+        
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
+            font-family: 'Georgia', serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
         }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--secondary-color);
-            margin-bottom: 40px;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
+        
+        h1 {
+            text-align: center;
             color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
         }
-
-        .theme-toggle {
+        
+        h2 {
+            color: var(--primary-color);
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        
+        h3 {
+            color: var(--primary-color);
+            margin-top: 25px;
+        }
+        
+        .definition, .corollary {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: box-shadow 0.3s;
+        }
+        
+        .definition:hover, .corollary:hover {
+            box-shadow: 0 6px 12px var(--shadow-color);
+        }
+        
+        .definition {
+            border-left: 5px solid var(--success-color);
+        }
+        
+        .corollary {
+            border-left: 5px solid var(--danger-color);
+        }
+        
+        .eq-number {
+            color: var(--eq-number-color);
+            font-weight: bold;
+            float: right;
+        }
+        
+        .math {
+            font-family: "Times New Roman", serif;
+            font-size: 1.1em;
+        }
+        
+        .boxed {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px 0;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            background-color: var(--box-bg);
+        }
+        
+        .proof-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .proof-button:hover {
             background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .proof-content {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--proof-bg);
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .proof-content.show {
+            display: block;
+        }
+        
+        .proof-header {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .qed {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        /* Dark mode toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 12px 24px;
-            font-size: 1rem;
+            width: 60px;
+            height: 30px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 8px var(--shadow);
+            justify-content: space-between;
+            padding: 0 5px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            z-index: 100;
         }
-
-        .theme-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px var(--shadow);
+        
+        .theme-toggle:focus {
+            outline: 2px solid var(--primary-color);
         }
-
-        .theme-toggle:active {
-            transform: translateY(0);
+        
+        .theme-toggle span {
+            font-size: 12px;
+            line-height: 1;
         }
-
-        .theme-toggle i {
-            font-size: 1.2rem;
+        
+        .theme-toggle .toggle-circle {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            top: 3px;
+            left: 3px;
         }
-
-        .hero {
-            text-align: center;
-            padding: 40px 0;
-            margin-bottom: 40px;
+        
+        [data-theme="dark"] .theme-toggle .toggle-circle {
+            transform: translateX(30px);
         }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            color: var(--secondary-color);
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 5px 15px var(--shadow);
-            transition: transform 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .card p {
-            margin-bottom: 15px;
+        
+        /* Theme indicator text */
+        .theme-indicator {
+            position: fixed;
+            top: 55px;
+            right: 20px;
+            font-size: 12px;
             color: var(--text-color);
-        }
-
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            border-top: 1px solid var(--secondary-color);
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-        }
-
-        .theme-info {
             background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-            text-align: center;
+            padding: 3px 8px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            z-index: 99;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
-
-        .theme-info h3 {
-            margin-bottom: 10px;
-            color: var(--primary-color);
+        
+        .theme-indicator.show {
+            opacity: 0.8;
         }
-
-        /* Animation for toggle icon */
-        .fa-sun {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        /* Responsive adjustments */
+        
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
+            body {
+                padding: 15px;
             }
             
-            .content-grid {
-                grid-template-columns: 1fr;
+            .boxed {
+                display: block;
+                overflow-x: auto;
             }
             
             .theme-toggle {
-                padding: 10px 20px;
-                font-size: 0.9rem;
+                top: 10px;
+                right: 10px;
+            }
+            
+            .theme-indicator {
+                top: 45px;
+                right: 10px;
             }
         }
-    </style>
-</head>
+</style>
+    
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">ThemeSwitch</div>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon"></i>
-                <span>Dark Mode</span>
-            </button>
-        </header>
-
-        <main>
-            <section class="hero">
-                <h1>Dark/Light Theme Toggle Demo</h1>
-                <p>This page demonstrates a simple dark/light theme toggle. Click the button in the top right corner to switch between themes. Your preference will be saved for your next visit.</p>
-            </section>
-
-            <section class="content-grid">
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h2>Customizable Themes</h2>
-                    <p>Easily switch between light and dark themes with a single click. The transition is smooth and visually pleasing.</p>
-                    <p>Each theme uses CSS custom properties (variables) for consistent color application across the entire page.</p>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span>Dark Mode</span>
+    </button>
+    
+    <h1>Covariance and Contravariance</h1>
+    
+    <h2>1. Definitions</h2>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Covariant basis</strong> of a vector space of dimension \(n\): 
+            \(\mathbf{e_j} \triangleq\) {any linearly independent basis for which in general is 
+            \(\mathbf{e_i} \cdot \mathbf{e_j} \neq \delta_{ij}\)}, i.e. not necessarily orthonormal.
+            <span class="eq-number">(D.1)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Contravariant components</strong> of a vector \(\mathbf{v}\): 
+            \(v^i \triangleq \{ v^i \mid \mathbf{v} = v^i \mathbf{e_i}\}\).
+            <span class="eq-number">(D.2)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Dual (contravariant) basis</strong> of a vector space of dimension \(n\): 
+            \(\mathbf{e^i} \triangleq \{ \mathbf{e^i} : \mathbf{e^i} \cdot \mathbf{e_j} = \delta^i_j \}\).
+            <span class="eq-number">(D.3)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Covariant components</strong> of a vector \(\mathbf{v}\): 
+            \(v_i \triangleq \{ v_i \mid \mathbf{v} = v_i \mathbf{e^i}\}\).
+            <span class="eq-number">(D.4)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Components of the covariant metric tensor</strong> 
+            \(g_{ij} \triangleq \mathbf{e_i} \cdot \mathbf{e_j}\); the metric tensor can be considered a square matrix, since it only has two covariant indices: \(g \triangleq \{ g_{ij} \}\); for the commutative property of the dot product, the \(g_{ij}\) are symmetric.
+            <span class="eq-number">(D.5)</span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            <strong>Components of the contravariant metric tensor</strong> 
+            \(g^{ij} \triangleq \{ h_{ij} : g^{-1} = \{ h_{ij} \}\}\); these are the elements of the inverse of the covariant metric tensor/matrix \(g^{-1}\), and for the properties of the inverse of a symmetric matrix, they're also symmetric.
+            <span class="eq-number">(D.6)</span>
+        </div>
+    </div>
+    
+    <h2>2. Corollaries</h2>
+    
+    <ul>
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(g^{ij}g_{jk} = \delta^i_k\)</div>
+                <span class="eq-number">(1)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof1')">Proof</button>
+                
+                <div id="proof1" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    From the properties of the inverse matrix (D.6).
                 </div>
-
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-save"></i>
-                    </div>
-                    <h2>Preferences Saved</h2>
-                    <p>Your theme preference is saved in your browser's local storage. When you return, the site will automatically apply your preferred theme.</p>
-                    <p>This provides a personalized experience without requiring an account or login.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h2>Eye Comfort</h2>
-                    <p>Dark theme reduces eye strain in low-light environments and can help conserve battery life on OLED screens.</p>
-                    <p>Light theme offers better readability in well-lit environments and is familiar to most users.</p>
-                </div>
-            </section>
-
-            <div class="theme-info">
-                <h3>Current Theme: <span id="currentTheme">Light</span></h3>
-                <p>The theme toggle uses CSS variables and JavaScript to switch between color schemes. Try it out!</p>
             </div>
-        </main>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\mathbf{e^i} = g^{ij} \mathbf{e_j}\)</div>
+                <span class="eq-number">(2)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof2')">Proof</button>
+                
+                <div id="proof2" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Let's suppose that \(\{A^{ij} \mid \mathbf{e^i} = A^{ij} \mathbf{e_j}\}\); we will show that \(A^{ij} = g^{ij}\). 
+                    Taking the dot product of both sides with \(\mathbf{e_k}\):
+                    \(\mathbf{e^i} \cdot \mathbf{e_k} = (A^{ij} \mathbf{e_j}) \cdot \mathbf{e_k} \stackrel{\text{(D.3,D.5)}}{\to} A^{ij}g_{jk} = \delta^i_k\); 
+                    multiplying both sides by \(g^{mk}\):
+                    \(g^{mk}A^{ij}g_{jk} = g^{mk}\delta^i_k \stackrel{\text{(D.5)}}{\to} g^{mk}g_{kj}A^{ij} = g^{mi} \stackrel{\text{(1)}}{\to} \delta^m_j A^{ij} = g^{mi} \to A^{im} = g^{mi}\stackrel{\text{(D.6)}}{=} g^{im},\ \text{Q.E.D.}\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\mathbf{e^i} \cdot \mathbf{e^j} = g^{ij}\)</div>
+                <span class="eq-number">(3)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof3')">Proof</button>
+                
+                <div id="proof3" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(\mathbf{e^i} \stackrel{\text{(2)}}{=} g^{ik} \mathbf{e_k}; \mathbf{e^j} \stackrel{\text{(2)}}{=} g^{jm} \mathbf{e_m} \to \mathbf{e^i} \cdot \mathbf{e^j} = g^{ik} g^{jm} (\mathbf{e_k} \cdot \mathbf{e_m}) \stackrel{\text{(D.5)}}{=} g^{ik}g^{jm}g_{km} \stackrel{\text{(1)}}{=} \delta^i_m g^{jm} = g^{ji} \stackrel{\text{(D.6)}}{=} g^{ij},\ \text{Q.E.D.}\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\mathbf{e_i} = g_{ij} \mathbf{e^j}\)</div>
+                <span class="eq-number">(4)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof4')">Proof</button>
+                
+                <div id="proof4" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Let's suppose that \(\{B_{ij} \mid \mathbf{e_i} = B_{ij} \mathbf{e^j}\}\); we will show that \(B_{ij} = g_{ij}\). 
+                    Taking the dot product of both sides with \(\mathbf{e^k}\): 
+                    \(\mathbf{e_i} \cdot \mathbf{e^k} = (B_{ij} \mathbf{e^j}) \cdot \mathbf{e^k} \stackrel{\text{(D.3,3)}}{\to} B_{ij}g^{jk} = \delta_i^k\); 
+                    multiplying both sides by \(g_{mk}\):
+                    \(g_{mk}B_{ij}g^{jk} = g_{mk}\delta_i^k \stackrel{\text{(D.5)}}{\to} g_{mk}g^{kj}B_{ij} = g_{mi} \stackrel{\text{(1)}}{\to} \delta_m^j B_{ij} = g_{mi} \to B_{im} = g_{mi} \stackrel{\text{(D.5)}}{=} g_{im},\ \text{Q.E.D.}\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(v^i = g^{ij} v_j\)</div>
+                <span class="eq-number">(5)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof5')">Proof</button>
+                
+                <div id="proof5" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(\mathbf{v} \stackrel{\text{(D.2)}}{=} v^i \mathbf{e_i}; \mathbf{v} \stackrel{\text{(D.4)}}{=} v_j \mathbf{e^j} \stackrel{\text{(2)}}{=} v_j(g^{ji} \mathbf{e_i}) \to v^i \mathbf{e_i} = v_j g^{ji} \mathbf{e_i}, \forall i \to v^i = g^{ji}v_j \stackrel{\text{(D.6)}}{=} g^{ij} v_j,\ \text{Q.E.D.}\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(v_i = g_{ij} v^j\)</div>
+                <span class="eq-number">(6)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof6')">Proof</button>
+                
+                <div id="proof6" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Specular to (5).
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(v_i = \mathbf{v} \cdot \mathbf{e_i}\)</div>
+                <span class="eq-number">(7)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof7')">Proof</button>
+                
+                <div id="proof7" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(\mathbf{v} \cdot \mathbf{e_i} \stackrel{\text{(D.4)}}{=} (v_j \mathbf{e^j}) \cdot \mathbf{e_i} \stackrel{\text{(D.3)}}{=} v_j \delta^j_i = v_i,\ \text{Q.E.D.}\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(v^i = \mathbf{v} \cdot \mathbf{e^i}\)</div>
+                <span class="eq-number">(8)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof8')">Proof</button>
+                
+                <div id="proof8" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Specular to (7).
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\mathbf{u} \cdot \mathbf{v} = g_{ij}u^iv^j\)</div>
+                <span class="eq-number">(9)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof9')">Proof</button>
+                
+                <div id="proof9" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(\mathbf{u} \cdot \mathbf{v} \stackrel{\text{(D.2)}}{=} (u^i\mathbf{e_i}) \cdot (v^j\mathbf{e_j}) = (\mathbf{e_i} \cdot \mathbf{e_j})u^iv^j \stackrel{\text{(D.5)}}{=} g_{ij}u^iv^j,\ \text{Q.E.D.}\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\mathbf{u} \cdot \mathbf{v} = g^{ij}u_iv_j\)</div>
+                <span class="eq-number">(10)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof10')">Proof</button>
+                
+                <div id="proof10" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    Specular to (9).
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+    </ul>
 
-        <footer>
-            <p>Dark/Light Theme Toggle Demo &copy; <span id="currentYear"></span> | Made with <i class="fas fa-heart" style="color: #e74c3c;"></i></p>
-        </footer>
+    <h2>3. Derivatives</h2>
+    
+    <div class="definition">
+        <div class="math">
+            For \(F:\mathbb{R}^n\to \mathbb{R}\), define \(\partial[i] F(x_1,...,x_n) \triangleq \lim_{h\to 0} \frac{F(...,x_i+h,...) - F(...,x_i,...)}{h}\).
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            Let \(\mathbf{e}\) and \(\mathbf{\bar e}\) be two bases of a vector space \(V\) of dimension <em>n</em>, with metric tensor having components \(g_{ij} = e_i\cdot e_j\) and \(\bar g_{ij} = \bar e_i \cdot \bar e_j\).
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            For \(f:V\to \mathbb{R}\), define:
+            <ul>
+                <li><strong>Covariant derivative:</strong><br>
+                    \(\partial_i f \triangleq \partial[i] F_\star\) where \(F_\star:\mathbb{R}^n\to\mathbb{R}\) is defined by \(F_\star(x^1,...,x^n) = f(x^ie_i)\).<br>
+                    \(\bar \partial_i f \triangleq \partial[i] \bar F_\star\) where \(\bar F_\star:\mathbb{R}^n\to\mathbb{R}\) is defined by \(\bar F_\star(\bar x^1,...,\bar x^n) = f(\bar x^i\bar e_i)\).
+                </li>
+                <li><strong>Contravariant derivative:</strong><br>
+                    \(\partial^i f \triangleq \partial[i] F^\star\) where \(F^\star:\mathbb{R}^n\to\mathbb{R}\) is defined by \(F^\star(x_1,...,x_n) = f(x_ie^i)\).<br>
+                    \(\bar \partial^i f \triangleq \partial[i] \bar F^\star\) where \(\bar F^\star:\mathbb{R}^n\to\mathbb{R}\) is defined by \(\bar F^\star(\bar x_1,...,\bar x_n) = f(\bar x_i\bar e^i)\).
+                </li>
+                <li><strong>Squared derivative:</strong><br>
+                    \(\partial^2 \triangleq \partial^i\partial_i\) and \(\bar\partial^2 \triangleq \bar\partial^i\bar\partial_i\).
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            Let \(\Lambda\) be the change of basis matrix: \( \mathbf{v} = \bar v^i\mathbf{\bar e_i} = v^i\mathbf{e_i}\implies \bar v^i = \Lambda^i_j v^j\).
+        </div>
+    </div>
+    
+    <ul>
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(e_i = \Lambda^k_i\bar e_k\) and \(e^i = g^{ij} \Lambda^k_j\bar e_k\) and \(\bar e_i = (\Lambda^{-1})^k_i e_k\) and \(\bar e^i = g^{ij}(\Lambda^{-1})^k_j e_k\)</div>
+                <span class="eq-number">(11)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof11')">Proof</button>
+                
+                <div id="proof11" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(e_i = \delta^j_i e_j = \Lambda^k_j\delta^j_i\bar e_k\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\mathbf{v} = \bar v_i\mathbf{\bar e^i} = v_i\mathbf{e^i}\implies \bar v_i = \bar g_{ij}\Lambda^j_k g^{kl}v_l\)</div>
+                <span class="eq-number">(12)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof12')">Proof</button>
+                
+                <div id="proof12" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(\bar v_i = g_{ij}\bar v^j = \bar g_{ij}\Lambda^j_k v^k = \bar g_{ij}\Lambda^j_k g^{kl}v_l\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(g = \Lambda^T \bar g\Lambda\)</div>
+                <span class="eq-number">(13)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof13')">Proof</button>
+                
+                <div id="proof13" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(g_{ij} = e_i \cdot e_j = \Lambda^k_i\bar e_k \cdot \Lambda^l_j \bar e_l = \Lambda^k_i\Lambda^l_j\bar g_{kl}\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\bar g^{-1} = \Lambda g^{-1}\Lambda^T\)</div>
+                <span class="eq-number">(14)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof14')">Proof</button>
+                
+                <div id="proof14" class="proof-content">
+                    <div class="proof-header">Proof 1:</div>
+                    \(g = \Lambda^T \bar g\Lambda
+                    \implies g^{-1} = \Lambda^{-1}\bar g^{-1}(\Lambda^T)^{-1}
+                    \implies \bar g^{-1} = \Lambda g^{-1}\Lambda^{T}\)
+                    
+                    <div class="proof-header" style="margin-top: 15px;">Proof 2:</div>
+                    \(\bar g^{ij}
+                    = \bar e^i \cdot \bar e^j
+                    = \bar g_{ik} \bar e^i \cdot \bar g_{jl} \bar e^j
+                    = \bar g_{ik} \bar e^i \cdot \bar g_{jl} \bar e^j
+                    = \Lambda^k_i\bar e_k \cdot \Lambda^l_j \bar e_l
+                    = \Lambda^k_i\Lambda^l_j\bar g_{kl}\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(F_\star = F^\star\circ g\)</div>
+                <span class="eq-number">(15)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof15')">Proof</button>
+                
+                <div id="proof15" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(F_\star(x^j,...,x^j) = f(x^ie_i) = f(g_{ij}x^ie^j) = F^\star(g_{i1}x^i,...,g_{in}x^i) = (F^\star\circ g)(x^j,...,x^j)\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(F_\star = \bar F_\star \circ \Lambda\)</div>
+                <span class="eq-number">(16)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof16')">Proof</button>
+                
+                <div id="proof16" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(F_\star (x^1,...,x^n) = f(x^i e_i) = f(\Lambda^i_j x^j \bar e_j) = \bar F_\star (\Lambda^1_j x^j, ...,\Lambda^n_j x^j) = (\bar F_\star \circ \Lambda) (x^1,...,x^n)\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(F^\star = \bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}\)</div>
+                <span class="eq-number">(17)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof17')">Proof</button>
+                
+                <div id="proof17" class="proof-content">
+                    <div class="proof-header">Proof 1:</div>
+                    \(F^\star = F_\star \circ g^{-1} = \bar F_\star \circ \Lambda\circ g^{-1} = \bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}\)
+                    
+                    <div class="proof-header" style="margin-top: 15px;">Proof 2:</div>
+                    \(F^\star (x_1,...,x_n) = f(x_ie^i) = f(\bar g_{ij}\Lambda^j_k g^{kl}x_l\bar e^i) = \bar F^\star (\bar g_{1j}\Lambda^j_k g^{kl}x_l, ..., \bar g_{nj}\Lambda^j_k g^{kl}x_l) = (\bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}) (x_1,...,x_n)\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\partial^i = g^{ij}\partial_j\) and \(\bar \partial^i = \bar g^{ij}\bar \partial_j\) and \(\partial_i = g_{ij}\partial^j\) and \(\bar \partial_i = \bar g_{ij}\bar \partial^j\)</div>
+                <span class="eq-number">(18)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof18')">Proof</button>
+                
+                <div id="proof18" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(\partial_i f(v) = \partial[i] F_\star(x^1,...,x^n) = \partial[i] (F^\star\circ g)(x^1,...,x^n) = \sum_{j} g_{ij}\partial[j] F^\star(x_1,...,x_n) = g_{ij}\partial^j f(v)\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\partial^i= \bar g_{kl}\Lambda^k_j g^{ij}\bar \partial^l\)</div>
+                <span class="eq-number">(19)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof19')">Proof</button>
+                
+                <div id="proof19" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(\partial^i f(v)
+                    = \partial[i] F^\star(x_1,...,x_n) = \partial[i] (\bar F^\star \circ \bar g \circ \Lambda\circ g^{-1})(x_1,...,x_n)
+                    = \sum_l \bar g_{kl}\Lambda^k_j g^{ij}\partial[l] \bar F^\star(\bar x_1,...,\bar x_n)
+                    = \bar g_{kl}\Lambda^k_j g^{ij}\bar\partial^l f(v)\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\partial_i= \Lambda^j_i\bar\partial_j\)</div>
+                <span class="eq-number">(20)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof20')">Proof</button>
+                
+                <div id="proof20" class="proof-content">
+                    <div class="proof-header">Proof:</div>
+                    \(\partial_i f(v) = \partial[i] F_\star(x^1,...,x^n) = \partial[i] (\bar F_\star \circ \Lambda)(x^1,...,x^n) = \sum_j \Lambda^j_i\partial[j] \bar F_\star(\bar x^1,...,\bar x^n) = \Lambda^j_i\bar \partial_j f(v)\)
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+        
+        <li>
+            <div class="corollary">
+                <div class="boxed math">\(\partial^2 = \bar\partial^2\)</div>
+                <span class="eq-number">(21)</span>
+                
+                <button class="proof-button" onclick="toggleProof('proof21')">Proof</button>
+                
+                <div id="proof21" class="proof-content">
+                    <div class="proof-header">Proof 1:</div>
+                    \(\partial^2
+                    = \partial^i\partial_i
+                    = g^{ij}\partial_j \partial_i
+                    = g^{ij}\Lambda^k_j\bar\partial_k\Lambda^l_i\bar\partial_l
+                    = g^{ij}\Lambda^k_j\Lambda^l_i\bar\partial_k\bar\partial_l
+                    = \bar g^{kl}\bar\partial_k\bar\partial_l
+                    = \bar\partial^l\bar\partial_l
+                    = \partial^2\)
+                    
+                    <div class="proof-header" style="margin-top: 15px;">Proof 2:</div>
+                    \[
+                    \begin{align*}
+                        \partial^2
+                        &= \partial^i\partial_i\\
+                        &= \partial^i g_{ij}\partial^j\\
+                        &= g_{ij}\bar g_{ab}\Lambda^a_c g^{ic}\bar\partial^b \bar g_{pq}\Lambda^p_r g^{jr}\bar\partial^q\\
+                        &= \bar g_{ab}\Lambda^a_c \bar\partial^b \bar g_{pq}\Lambda^p_r g^{cr}\bar\partial^q\\
+                        &= \bar g_{ab} \bar\partial^b \bar g_{pq} \bar g^{ap}\bar\partial^q\\
+                        &= \bar g_{ab} \bar\partial^b \bar\partial^a\\
+                        &= \bar\partial^b \bar\partial_b\\
+                        &= \partial^2
+                    \end{align*}
+                    \]
+                    <div class="qed">∎</div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    
+    <h2>Debug Page</h2>
+    <a href="../debug.html">Go to Another Page</a>
+
+    <div style="text-align: center; margin-top: 40px; color: #7f8c8d; font-size: 0.9em;">
+        Covariance and Contravariance • Click "Proof" to show/hide proofs
     </div>
 
     <script>
-        // Get DOM elements
+        function toggleProof(proofId) {
+            const proofContent = document.getElementById(proofId);
+            const isVisible = proofContent.classList.contains('show');
+            
+            // Toggle the proof visibility
+            proofContent.classList.toggle('show');
+            
+            // Update button text
+            const button = proofContent.previousElementSibling;
+            if (!isVisible) {
+                button.textContent = 'Hide Proof';
+            } else {
+                button.textContent = 'Proof';
+            }
+            
+            // If showing proof, typeset any new math
+            if (!isVisible && typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise([proofContent]);
+            }
+        }
+
+                // Get DOM elements
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = themeToggle.querySelector('i');
         const themeText = themeToggle.querySelector('span');
