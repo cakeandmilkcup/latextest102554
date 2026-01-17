@@ -416,7 +416,7 @@
     
     <div class="definition">
         <div class="math">
-            Let \(\Lambda\) be the change of basis matrix: \( \mathbf{v} = \bar v^i\mathbf{\bar e_i} = v^i\mathbf{e_i}\implies \bar v^i = \Lambda^i_j v^j\).
+            Let \(\Lambda\) be the change of basis matrix: \( e_i = \Lambda_i^j \bar e_j \).
             <span class="eq-number"></span>
         </div>
     </div>
@@ -424,14 +424,14 @@
     <ul>
         <li>
             <div class="corollary">
-                <div class="boxed math">\(e_i = \Lambda^k_i\bar e_k\) and \(e_i = \Lambda^k_i g_{kj}\bar e^j\) and \(e^i = g^{ij} \Lambda^k_j\bar e_k\) and \(e^i = g^{ij}\Lambda^k_j\bar g_{kl}\bar e^l\)</div>
+                <div class="boxed math">\(e^i = g^{ij}\Lambda^k_j\bar g_{kl}\bar e^l\)</div>
                 <span class="eq-number">(11)</span>
         
                 <button class="proof-button" onclick="toggleProof('proof11')">Proof</button>
         
                 <div id="proof11" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    \(e_i = \delta^j_i e_j = \Lambda^k_j\delta^j_i\bar e_k\), and the others follow from this.
+                    \(e^i = g^{ij}e_j = g^{ij}\Lambda_j^k\bar e_k = g^{ij}\Lambda_j^k\bar g_{kl}\bar e^l\).
                     <div class="qed">∎</div>
                 </div>
             </div>
