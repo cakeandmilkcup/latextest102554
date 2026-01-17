@@ -380,38 +380,44 @@
     
     <div class="definition">
         <div class="math">
-            For \(F:\mathbb{R}^n\to \mathbb{R}\), define \(\partial[i] F(x_1,...,x_n) \triangleq \lim_{h\to 0} \frac{F(...,x_i+h,...) - F(...,x_i,...)}{h}\).
+            Let \(V\) be a vector space and \(f:V\to \mathbb{R}\). For \(u\in V\), the derivative of \(f\) in the direction of \(u\), written \(\partial[u]f : V \to \mathbb{R}\), is defined by
+            \[
+            \partial[u]f(v) = \lim_{h\to 0} \frac{f(v+hu)-f(v)}{h}
+            \]
+            if this limit exists.
+            <span class="eq-number"></span>
         </div>
     </div>
     
     <div class="definition">
         <div class="math">
-            Let \(\mathbf{e}\) and \(\mathbf{\bar e}\) be two bases of a vector space \(V\) of dimension <em>n</em>, with metric tensor having components \(g_{ij} = e_i\cdot e_j\) and \(\bar g_{ij} = \bar e_i \cdot \bar e_j\).
+            If \(V=\mathbb{R}^n\) and \(\hat x_1,\dots,\hat x_n\) is the standard basis, we get
+            \[
+            \partial[\hat x_i]f(x_1,\dots,x_n) = \lim_{h\to 0} \frac{f(\dots,x_i+h,\dots)-f(\dots,x_i,\dots)}{h} = \partial_i f(x_1,\dots,x_n)
+            \]
+            which is the familiar partial derivative.
+            <span class="eq-number"></span>
         </div>
     </div>
     
     <div class="definition">
         <div class="math">
-            For \(f:V\to \mathbb{R}\), define:
-            <ul>
-                <li><strong>Covariant derivative:</strong><br>
-                    \(\partial_i f \triangleq \partial[i] F_\star\) where \(F_\star:\mathbb{R}^n\to\mathbb{R}\) is defined by \(F_\star(x^1,...,x^n) = f(x^ie_i)\).<br>
-                    \(\bar \partial_i f \triangleq \partial[i] \bar F_\star\) where \(\bar F_\star:\mathbb{R}^n\to\mathbb{R}\) is defined by \(\bar F_\star(\bar x^1,...,\bar x^n) = f(\bar x^i\bar e_i)\).
-                </li>
-                <li><strong>Contravariant derivative:</strong><br>
-                    \(\partial^i f \triangleq \partial[i] F^\star\) where \(F^\star:\mathbb{R}^n\to\mathbb{R}\) is defined by \(F^\star(x_1,...,x_n) = f(x_ie^i)\).<br>
-                    \(\bar \partial^i f \triangleq \partial[i] \bar F^\star\) where \(\bar F^\star:\mathbb{R}^n\to\mathbb{R}\) is defined by \(\bar F^\star(\bar x_1,...,\bar x_n) = f(\bar x_i\bar e^i)\).
-                </li>
-                <li><strong>Squared derivative:</strong><br>
-                    \(\partial^2 \triangleq \partial^i\partial_i\) and \(\bar\partial^2 \triangleq \bar\partial^i\bar\partial_i\).
-                </li>
-            </ul>
+            Let \(\mathbf{e}\) and \(\mathbf{\bar e}\) be two bases of a vector space \(V\) of dimension \(n\). We will prove that \(\partial[e_i]\partial[e^i]f = \partial[\bar e_i]\partial[\bar e^i]f\).
+            <span class="eq-number"></span>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <div class="math">
+            The metric tensors have components \(g_{ij} = e_i\cdot e_j\) and \(\bar g_{ij} = \bar e_i \cdot \bar e_j\).
+            <span class="eq-number"></span>
         </div>
     </div>
     
     <div class="definition">
         <div class="math">
             Let \(\Lambda\) be the change of basis matrix: \( \mathbf{v} = \bar v^i\mathbf{\bar e_i} = v^i\mathbf{e_i}\implies \bar v^i = \Lambda^i_j v^j\).
+            <span class="eq-number"></span>
         </div>
     </div>
     
