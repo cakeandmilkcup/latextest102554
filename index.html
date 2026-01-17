@@ -418,14 +418,14 @@
     <ul>
         <li>
             <div class="corollary">
-                <div class="boxed math">\(e_i = \Lambda^k_i\bar e_k\) and \(e^i = g^{ij} \Lambda^k_j\bar e_k\) and \(\bar e_i = (\Lambda^{-1})^k_i e_k\) and \(\bar e^i = g^{ij}(\Lambda^{-1})^k_j e_k\)</div>
+                <div class="boxed math">\(e_i = \Lambda^k_i\bar e_k\) and \(e_i = \Lambda^k_i g_{kj}\bar e^j\) and \(e^i = g^{ij} \Lambda^k_j\bar e_k\) and \(e^i = g^{ij}\Lambda^k_j\bar g_{kl}\bar e^l\)</div>
                 <span class="eq-number">(11)</span>
-                
+        
                 <button class="proof-button" onclick="toggleProof('proof11')">Proof</button>
-                
+        
                 <div id="proof11" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    \(e_i = \delta^j_i e_j = \Lambda^k_j\delta^j_i\bar e_k\)
+                    \(e_i = \delta^j_i e_j = \Lambda^k_j\delta^j_i\bar e_k\), and the others follow from this.
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -433,69 +433,20 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">\(\mathbf{v} = \bar v_i\mathbf{\bar e^i} = v_i\mathbf{e^i}\implies \bar v_i = \bar g_{ij}\Lambda^j_k g^{kl}v_l\)</div>
-                <span class="eq-number">(12)</span>
-                
-                <button class="proof-button" onclick="toggleProof('proof12')">Proof</button>
-                
-                <div id="proof12" class="proof-content">
-                    <div class="proof-header">Proof:</div>
-                    \(\bar v_i = g_{ij}\bar v^j = \bar g_{ij}\Lambda^j_k v^k = \bar g_{ij}\Lambda^j_k g^{kl}v_l\)
-                    <div class="qed">∎</div>
-                </div>
-            </div>
-        </li>
-        
-        <li>
-            <div class="corollary">
-                <div class="boxed math">\(g = \Lambda^T \bar g\Lambda\)</div>
-                <span class="eq-number">(13)</span>
-                
-                <button class="proof-button" onclick="toggleProof('proof13')">Proof</button>
-                
-                <div id="proof13" class="proof-content">
-                    <div class="proof-header">Proof:</div>
-                    \(g_{ij} = e_i \cdot e_j = \Lambda^k_i\bar e_k \cdot \Lambda^l_j \bar e_l = \Lambda^k_i\Lambda^l_j\bar g_{kl}\)
-                    <div class="qed">∎</div>
-                </div>
-            </div>
-        </li>
-        
-        <li>
-            <div class="corollary">
-                <div class="boxed math">\(\bar g^{-1} = \Lambda g^{-1}\Lambda^T\)</div>
-                <span class="eq-number">(14)</span>
-                
-                <button class="proof-button" onclick="toggleProof('proof14')">Proof</button>
-                
-                <div id="proof14" class="proof-content">
-                    <div class="proof-header">Proof 1:</div>
-                    \(g = \Lambda^T \bar g\Lambda
-                    \implies g^{-1} = \Lambda^{-1}\bar g^{-1}(\Lambda^T)^{-1}
-                    \implies \bar g^{-1} = \Lambda g^{-1}\Lambda^{T}\)
-                    
-                    <div class="proof-header" style="margin-top: 15px;">Proof 2:</div>
-                    \(\bar g^{ij}
-                    = \bar e^i \cdot \bar e^j
-                    = \bar g_{ik} \bar e^i \cdot \bar g_{jl} \bar e^j
-                    = \bar g_{ik} \bar e^i \cdot \bar g_{jl} \bar e^j
-                    = \Lambda^k_i\bar e_k \cdot \Lambda^l_j \bar e_l
-                    = \Lambda^k_i\Lambda^l_j\bar g_{kl}\)
-                    <div class="qed">∎</div>
-                </div>
-            </div>
-        </li>
-        
-        <li>
-            <div class="corollary">
-                <div class="boxed math">\(F_\star = F^\star\circ g\)</div>
+                <div class="boxed math">\(\partial[u+v]f = \partial[u]f+\partial[v]f\)</div>
                 <span class="eq-number">(15)</span>
-                
+        
                 <button class="proof-button" onclick="toggleProof('proof15')">Proof</button>
-                
+        
                 <div id="proof15" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    \(F_\star(x^j,...,x^j) = f(x^ie_i) = f(g_{ij}x^ie^j) = F^\star(g_{i1}x^i,...,g_{in}x^i) = (F^\star\circ g)(x^j,...,x^j)\)
+                    \begin{align*}
+                    \partial[u+v] f(w) - \partial[u]f(w) - \partial[v]f(w)
+                    &= \lim_{h\to 0} \frac{f(w+hu+hv)-f(w)}{h}-\lim_{h\to 0}\frac{f(w+hu)-f(w)}{h}-\lim_{h\to 0}\frac{f(w+hv)-f(w)}{h}\\
+                    &= \lim_{h\to 0} \frac{f(w+hu+hv)-f(w+hu)}{h}-\lim_{h\to 0}\frac{f(w+hv)-f(w)}{h}\\
+                    &= \lim_{h\to 0} \partial[v] f(w+hu) - \partial[v] f(w)\\
+                    &= 0
+                    \end{align*}
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -503,14 +454,17 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">\(F_\star = \bar F_\star \circ \Lambda\)</div>
+                <div class="boxed math">\(\partial[cu]f = c\partial[u]f\)</div>
                 <span class="eq-number">(16)</span>
-                
+        
                 <button class="proof-button" onclick="toggleProof('proof16')">Proof</button>
-                
+        
                 <div id="proof16" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    \(F_\star (x^1,...,x^n) = f(x^i e_i) = f(\Lambda^i_j x^j \bar e_j) = \bar F_\star (\Lambda^1_j x^j, ...,\Lambda^n_j x^j) = (\bar F_\star \circ \Lambda) (x^1,...,x^n)\)
+                    \(\partial[cu] f(v)
+                    = \lim_{h\to 0} \frac{f(v+hcu)-f(v)}{h}
+                    = c\lim_{h\to 0} \frac{f(v+hcu)-f(v)}{ch}
+                    = c\partial[u] f(v)\)
                     <div class="qed">∎</div>
                 </div>
             </div>
@@ -518,102 +472,18 @@
         
         <li>
             <div class="corollary">
-                <div class="boxed math">\(F^\star = \bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}\)</div>
+                <div class="boxed math">\(\partial[e_i]\partial[e^i]f = \partial[\bar e_i]\partial[\bar e^i]f\)</div>
                 <span class="eq-number">(17)</span>
-                
+        
                 <button class="proof-button" onclick="toggleProof('proof17')">Proof</button>
-                
+        
                 <div id="proof17" class="proof-content">
-                    <div class="proof-header">Proof 1:</div>
-                    \(F^\star = F_\star \circ g^{-1} = \bar F_\star \circ \Lambda\circ g^{-1} = \bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}\)
-                    
-                    <div class="proof-header" style="margin-top: 15px;">Proof 2:</div>
-                    \(F^\star (x_1,...,x_n) = f(x_ie^i) = f(\bar g_{ij}\Lambda^j_k g^{kl}x_l\bar e^i) = \bar F^\star (\bar g_{1j}\Lambda^j_k g^{kl}x_l, ..., \bar g_{nj}\Lambda^j_k g^{kl}x_l) = (\bar F^\star \circ \bar g \circ \Lambda\circ g^{-1}) (x_1,...,x_n)\)
-                    <div class="qed">∎</div>
-                </div>
-            </div>
-        </li>
-        
-        <li>
-            <div class="corollary">
-                <div class="boxed math">\(\partial^i = g^{ij}\partial_j\) and \(\bar \partial^i = \bar g^{ij}\bar \partial_j\) and \(\partial_i = g_{ij}\partial^j\) and \(\bar \partial_i = \bar g_{ij}\bar \partial^j\)</div>
-                <span class="eq-number">(18)</span>
-                
-                <button class="proof-button" onclick="toggleProof('proof18')">Proof</button>
-                
-                <div id="proof18" class="proof-content">
                     <div class="proof-header">Proof:</div>
-                    \(\partial_i f(v) = \partial[i] F_\star(x^1,...,x^n) = \partial[i] (F^\star\circ g)(x^1,...,x^n) = \sum_{j} g_{ij}\partial[j] F^\star(x_1,...,x_n) = g_{ij}\partial^j f(v)\)
-                    <div class="qed">∎</div>
-                </div>
-            </div>
-        </li>
-        
-        <li>
-            <div class="corollary">
-                <div class="boxed math">\(\partial^i= \bar g_{kl}\Lambda^k_j g^{ij}\bar \partial^l\)</div>
-                <span class="eq-number">(19)</span>
-                
-                <button class="proof-button" onclick="toggleProof('proof19')">Proof</button>
-                
-                <div id="proof19" class="proof-content">
-                    <div class="proof-header">Proof:</div>
-                    \(\partial^i f(v)
-                    = \partial[i] F^\star(x_1,...,x_n) = \partial[i] (\bar F^\star \circ \bar g \circ \Lambda\circ g^{-1})(x_1,...,x_n)
-                    = \sum_l \bar g_{kl}\Lambda^k_j g^{ij}\partial[l] \bar F^\star(\bar x_1,...,\bar x_n)
-                    = \bar g_{kl}\Lambda^k_j g^{ij}\bar\partial^l f(v)\)
-                    <div class="qed">∎</div>
-                </div>
-            </div>
-        </li>
-        
-        <li>
-            <div class="corollary">
-                <div class="boxed math">\(\partial_i= \Lambda^j_i\bar\partial_j\)</div>
-                <span class="eq-number">(20)</span>
-                
-                <button class="proof-button" onclick="toggleProof('proof20')">Proof</button>
-                
-                <div id="proof20" class="proof-content">
-                    <div class="proof-header">Proof:</div>
-                    \(\partial_i f(v) = \partial[i] F_\star(x^1,...,x^n) = \partial[i] (\bar F_\star \circ \Lambda)(x^1,...,x^n) = \sum_j \Lambda^j_i\partial[j] \bar F_\star(\bar x^1,...,\bar x^n) = \Lambda^j_i\bar \partial_j f(v)\)
-                    <div class="qed">∎</div>
-                </div>
-            </div>
-        </li>
-        
-        <li>
-            <div class="corollary">
-                <div class="boxed math">\(\partial^2 = \bar\partial^2\)</div>
-                <span class="eq-number">(21)</span>
-                
-                <button class="proof-button" onclick="toggleProof('proof21')">Proof</button>
-                
-                <div id="proof21" class="proof-content">
-                    <div class="proof-header">Proof 1:</div>
-                    \(\partial^2
-                    = \partial^i\partial_i
-                    = g^{ij}\partial_j \partial_i
-                    = g^{ij}\Lambda^k_j\bar\partial_k\Lambda^l_i\bar\partial_l
-                    = g^{ij}\Lambda^k_j\Lambda^l_i\bar\partial_k\bar\partial_l
-                    = \bar g^{kl}\bar\partial_k\bar\partial_l
-                    = \bar\partial^l\bar\partial_l
-                    = \partial^2\)
-                    
-                    <div class="proof-header" style="margin-top: 15px;">Proof 2:</div>
-                    \[
-                    \begin{align*}
-                        \partial^2
-                        &= \partial^i\partial_i\\
-                        &= \partial^i g_{ij}\partial^j\\
-                        &= g_{ij}\bar g_{ab}\Lambda^a_c g^{ic}\bar\partial^b \bar g_{pq}\Lambda^p_r g^{jr}\bar\partial^q\\
-                        &= \bar g_{ab}\Lambda^a_c \bar\partial^b \bar g_{pq}\Lambda^p_r g^{cr}\bar\partial^q\\
-                        &= \bar g_{ab} \bar\partial^b \bar g_{pq} \bar g^{ap}\bar\partial^q\\
-                        &= \bar g_{ab} \bar\partial^b \bar\partial^a\\
-                        &= \bar\partial^b \bar\partial_b\\
-                        &= \partial^2
-                    \end{align*}
-                    \]
+                    \(\partial[e_i]\partial[e^i]f
+                    = \partial[\Lambda^k_i\bar e_k]\partial[g^{ij}\Lambda^l_j \bar g_{lm}\bar e^m]f
+                    = \Lambda^k_i g^{ij}\Lambda^l_j \bar g_{lm}\partial[\bar e_k]\partial[\bar e^m]f
+                    = \bar g^{kl} \bar g_{lm}\partial[\bar e_k]\partial[\bar e^m]f
+                    = \partial[\bar e_k]\partial[\bar e^k]f\)
                     <div class="qed">∎</div>
                 </div>
             </div>
